@@ -17,7 +17,7 @@ export default function App() {
   const [isEditingProjectName, setIsEditingProjectName] = useState(false);
   const [tempProjectName, setTempProjectName] = useState("");
 
-  const { settings, updateSetting, addFilament, deleteFilament } =
+  const { settings, updateSetting, addFilament, updateFilament, deleteFilament } =
     useSettings();
 
   const {
@@ -30,6 +30,7 @@ export default function App() {
     updatePlate,
     resetProject,
     saveToHistory,
+    updateHistoryItem,
     deleteFromHistory,
   } = useCalculator(settings);
 
@@ -165,9 +166,11 @@ export default function App() {
               results={results}
               history={history}
               saveToHistory={saveToHistory}
+              updateHistoryItem={updateHistoryItem}
               deleteFromHistory={deleteFromHistory}
               resetProject={resetProject}
               handleExport={handleExport}
+              settings={settings}
             />
 
             {/* 4. Global Variables catalog section */}
@@ -175,6 +178,7 @@ export default function App() {
               settings={settings}
               updateSetting={updateSetting}
               addFilament={addFilament}
+              updateFilament={updateFilament}
               deleteFilament={deleteFilament}
             />
           </div>

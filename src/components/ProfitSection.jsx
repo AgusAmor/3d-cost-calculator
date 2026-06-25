@@ -13,6 +13,7 @@ export default function ProfitSection({
   project,
   results,
   updateProjectField,
+  readOnly = false,
 }) {
   return (
     <div className="bg-slate-900/60 backdrop-blur-md border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
@@ -43,6 +44,7 @@ export default function ProfitSection({
                   )
                 }
                 placeholder="ej: 6"
+                disabled={readOnly}
               />
             </div>
           </div>
@@ -68,6 +70,7 @@ export default function ProfitSection({
                   )
                 }
                 placeholder="ej: Caja, cadena llavero, etc."
+                disabled={readOnly}
               />
             </div>
           </div>

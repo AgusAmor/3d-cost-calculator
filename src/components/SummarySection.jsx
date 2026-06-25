@@ -1,11 +1,16 @@
 import {
-  FiPieChart,
   FiSave,
   FiPrinter,
   FiRefreshCw,
   FiClock,
+  FiEye,
+  FiEdit2,
+  FiTrash2,
 } from "react-icons/fi";
+import { useState } from "react";
 import { formatCurrency, formatDuration } from "../utils/formatters";
+import QuoteModal from "./QuoteModal";
+import { useConfirm } from "../context/ConfirmContext";
 
 /**
  * SummarySection component.
@@ -16,19 +21,32 @@ import { formatCurrency, formatDuration } from "../utils/formatters";
  * @param {object} results - Calculations derived from useCalculator.
  * @param {array} history - Array of saved calculations.
  * @param {function} saveToHistory - Callback to save current project state.
+ * @param {function} updateHistoryItem - Callback to update a saved item.
  * @param {function} deleteFromHistory - Callback to delete a saved item.
  * @param {function} resetProject - Callback to reset inputs.
  * @param {function} handleExport - Callback to trigger PDF print mode.
+ * @param {object} settings - Global application settings.
  */
 export default function SummarySection({
   project,
   results,
   history,
   saveToHistory,
+  updateHistoryItem,
   deleteFromHistory,
   resetProject,
   handleExport,
+  settings,
 }) {
+  const [selectedQuote, setSelectedQuote] = useState(null);
+  const [quoteModalMode, setQuoteModalMode] = useState("view");
+  const { confirm } = useConfirm();
+
+  const openQuoteModal = (item, mode) => {
+    setSelectedQuote(item);
+    setQuoteModalMode(mode);
+  };
+
   // Compute percentages for the custom visual bar chart
   const { filamentCost, timeCost, laborCost, profit, finalPrice } = results;
   const totalVal = finalPrice || 1; // prevent divide-by-zero
@@ -41,7 +59,7 @@ export default function SummarySection({
   return (
     <div className="bg-slate-900/60 backdrop-blur-md border border-slate-800 rounded-2xl p-6 shadow-xl space-y-6">
       <h2 className="text-xl font-semibold text-slate-100 flex items-center gap-2 border-b border-slate-850 pb-3">
-        <FiPieChart className="text-violet-400" /> Resumen y Acciones
+        Resumen y Acciones
       </h2>
 
       {/* Visual Bar Chart */}
@@ -137,54 +155,79 @@ export default function SummarySection({
             para archivar.
           </div>
         ) : (
-          <div className="overflow-x-auto rounded-lg border border-slate-800">
-            <table className="min-w-full divide-y divide-slate-800 text-sm text-left">
-              <thead className="bg-slate-950 text-slate-400">
-                <tr>
-                  <th className="px-4 py-3 font-medium">Fecha</th>
-                  <th className="px-4 py-3 font-medium">Proyecto</th>
-                  <th className="px-4 py-3 font-medium">Filamento</th>
-                  <th className="px-4 py-3 font-medium">Tiempo</th>
-                  <th className="px-4 py-3 font-medium">Precio Final</th>
-                  <th className="px-4 py-3 font-medium text-right">Acciones</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-800 text-slate-350">
-                {history.map((item) => (
-                  <tr key={item.id} className="hover:bg-slate-850/30">
-                    <td className="px-4 py-3 text-xs text-slate-500">
-                      {item.date}
-                    </td>
-                    <td className="px-4 py-3 font-medium text-slate-200">
-                      {item.projectName}
-                    </td>
-                    <td className="px-4 py-3">
-                      {item.details.plates
-                        ? `${item.details.plates.length} ${item.details.plates.length === 1 ? "Placa de Impresión" : "Placas de Impresión"} (${item.details.plates.reduce((sum, p) => sum + Number(p.filamentGrams || 0), 0).toFixed(1)}g)`
-                        : `${item.results.selectedFilamentName || "N/A"} (${item.details.filamentGrams || 0}g)`}
-                    </td>
-                    <td className="px-4 py-3">
-                      {formatDuration(item.results.totalMinutes)}
-                    </td>
-                    <td className="px-4 py-3 font-bold text-emerald-400">
+          <div className="rounded-lg border border-slate-800 bg-slate-950/30 overflow-hidden divide-y divide-slate-800">
+            {history.map((item) => (
+              <div
+                key={item.id}
+                className="flex items-center justify-between p-4 hover:bg-slate-850/50 transition-colors"
+              >
+                <div className="flex flex-col gap-1">
+                  <span className="font-medium text-slate-200 text-sm sm:text-base">
+                    {item.projectName}
+                  </span>
+                  <div className="flex items-center gap-2 text-xs sm:text-sm">
+                    <span className="font-bold text-emerald-400">
                       {formatCurrency(item.results.finalPrice)}
-                    </td>
-                    <td className="px-4 py-3 text-right">
-                      <button
-                        onClick={() => deleteFromHistory(item.id)}
-                        className="text-red-400 hover:text-red-300 font-medium transition-colors cursor-pointer"
-                        type="button"
-                      >
-                        Eliminar
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                    </span>
+                    <span className="text-slate-500 hidden sm:inline">
+                      • {formatDuration(item.results.totalMinutes)}
+                    </span>
+                    <span className="text-slate-500 hidden sm:inline">
+                      • {item.details.plates ? item.details.plates.length : 1} {item.details.plates && item.details.plates.length === 1 ? "placa" : "placas"}
+                    </span>
+                  </div>
+                </div>
+                
+                <div className="flex items-center gap-1 sm:gap-2">
+                  <button
+                    onClick={() => openQuoteModal(item, "view")}
+                    className="p-2 text-emerald-400 hover:bg-emerald-400/10 rounded-lg transition-colors cursor-pointer"
+                    title="Ver detalles"
+                  >
+                    <FiEye className="text-lg" />
+                  </button>
+                  <button
+                    onClick={() => openQuoteModal(item, "edit")}
+                    className="p-2 text-sky-400 hover:bg-sky-400/10 rounded-lg transition-colors cursor-pointer"
+                    title="Editar cotización"
+                  >
+                    <FiEdit2 className="text-lg" />
+                  </button>
+                  <button
+                    onClick={async () => {
+                      if (
+                        await confirm({
+                          title: "Eliminar Cotización",
+                          message: "¿Estás seguro de que deseas eliminar esta cotización del historial?",
+                        })
+                      ) {
+                        deleteFromHistory(item.id);
+                      }
+                    }}
+                    className="p-2 text-red-400 hover:bg-red-400/10 rounded-lg transition-colors cursor-pointer"
+                    title="Eliminar"
+                  >
+                    <FiTrash2 className="text-lg" />
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
         )}
       </div>
+
+      {selectedQuote && (
+        <QuoteModal
+          key={selectedQuote.id}
+          isOpen={!!selectedQuote}
+          onClose={() => setSelectedQuote(null)}
+          item={selectedQuote}
+          settings={settings}
+          updateHistoryItem={updateHistoryItem}
+          deleteFromHistory={deleteFromHistory}
+          initialMode={quoteModalMode}
+        />
+      )}
     </div>
   );
 }

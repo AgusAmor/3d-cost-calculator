@@ -39,3 +39,8 @@ When implementing features, keep the state modular and centralized. Save configu
 
 1. **Numeric Inputs**: To fully support decimal commas across all OS locales and prevent negative numbers, do NOT use `<input type="number">`. Instead, use `<input type="text" inputMode="decimal">` and sanitize the value using the `parseDecimalInput` utility from `src/utils/formatters.js`.
 2. **State Updates**: Always ensure numeric properties that are stored as strings (to preserve trailing dots/commas during typing) are explicitly cast to `Number()` before performing mathematical operations (e.g., during `.reduce()` aggregations).
+
+## 🖼️ UI Patterns & Components
+
+1. **Modals**: All modal dialogs (Quotes, Filaments) must use the base `Modal` component (`src/components/ui/Modal.jsx`), which utilizes React Portals (`createPortal`) to escape CSS boundaries and support sticky footers.
+2. **Confirmations**: Never use native `window.confirm()`. Always use the `useConfirm` hook provided by `ConfirmContext` to trigger the custom `ConfirmModal` for destructive actions.

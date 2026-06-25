@@ -33,6 +33,7 @@ export default function PlateCard({
   onUpdate,
   onDelete,
   canDelete,
+  readOnly = false,
 }) {
   const [isOpen, setIsOpen] = useState(true);
   const [isEditingName, setIsEditingName] = useState(false);
@@ -68,7 +69,10 @@ export default function PlateCard({
   return (
     <div className="bg-slate-900/60 backdrop-blur-md border border-slate-800 rounded-2xl overflow-hidden shadow-lg transition-all duration-300">
       {/* Card Title Header Bar */}
-      <div className="flex items-center justify-between px-5 py-4 bg-slate-950/60 border-b border-slate-850">
+      <div 
+        className="flex items-center justify-between px-5 py-4 bg-slate-950/60 border-b border-slate-850 cursor-pointer group hover:bg-slate-950/80 transition-colors"
+        onClick={() => setIsOpen(!isOpen)}
+      >
         <div className="flex items-center gap-3 flex-1 min-w-0">
           <FiDisc className="text-violet-400 text-lg shrink-0 animate-spin-slow" />
 
@@ -78,31 +82,38 @@ export default function PlateCard({
                 type="text"
                 className="bg-slate-900 border border-slate-700 rounded px-2 py-0.5 text-sm text-slate-100 focus:outline-none focus:border-violet-500"
                 value={tempName}
+                onClick={(e) => e.stopPropagation()}
                 onChange={(e) => setTempName(e.target.value)}
                 onBlur={handleNameSave}
                 onKeyDown={(e) => e.key === "Enter" && handleNameSave()}
                 autoFocus
+                disabled={readOnly}
               />
-              <button
-                onClick={handleNameSave}
-                className="text-emerald-400 hover:text-emerald-300"
-              >
-                <FiCheck />
-              </button>
+              {!readOnly && (
+                <button
+                  onClick={(e) => { e.stopPropagation(); handleNameSave(); }}
+                  className="text-emerald-400 hover:text-emerald-300 p-1"
+                  type="button"
+                >
+                  <FiCheck />
+                </button>
+              )}
             </div>
           ) : (
             <div className="flex items-center gap-2 max-w-full">
               <span className="font-semibold text-slate-200 truncate">
                 {plate.name}
               </span>
-              <button
-                onClick={() => setIsEditingName(true)}
-                className="text-slate-500 hover:text-slate-350 transition-colors"
-                type="button"
-                title="Editar nombre"
-              >
-                <FiEdit2 className="text-xs" />
-              </button>
+              {!readOnly && (
+                <button
+                  onClick={(e) => { e.stopPropagation(); setIsEditingName(true); }}
+                  className="text-slate-500 hover:text-slate-350 transition-colors p-1"
+                  type="button"
+                  title="Editar nombre"
+                >
+                  <FiEdit2 className="text-xs" />
+                </button>
+              )}
             </div>
           )}
 
@@ -115,11 +126,10 @@ export default function PlateCard({
           )}
         </div>
 
-        {/* Header Controls */}
         <div className="flex items-center gap-3">
-          {canDelete && (
+          {canDelete && !readOnly && (
             <button
-              onClick={onDelete}
+              onClick={(e) => { e.stopPropagation(); onDelete(); }}
               className="text-slate-500 hover:text-red-400 p-1 rounded transition-colors cursor-pointer"
               type="button"
               title="Eliminar placa de impresión"
@@ -127,13 +137,9 @@ export default function PlateCard({
               <FiTrash2 className="text-sm" />
             </button>
           )}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="text-slate-400 hover:text-slate-200 p-1 cursor-pointer"
-            type="button"
-          >
+          <div className="text-slate-400 group-hover:text-slate-200 p-1 transition-colors">
             {isOpen ? <FiChevronUp /> : <FiChevronDown />}
-          </button>
+          </div>
         </div>
       </div>
 
@@ -161,6 +167,7 @@ export default function PlateCard({
                       handleTimeChange(parseDecimalInput(e.target.value))
                     }
                     placeholder="ej: 2.49 (2hs 49m)"
+                    disabled={readOnly}
                   />
                   <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 text-xs font-mono pointer-events-none">
                     HD
@@ -197,6 +204,7 @@ export default function PlateCard({
                       ""
                     }
                     onChange={handleFilamentChange}
+                    disabled={readOnly}
                   >
                     {settings.filaments.map((f) => (
                       <option key={f.id} value={f.id}>
@@ -220,6 +228,7 @@ export default function PlateCard({
                         handleGramsChange(parseDecimalInput(e.target.value))
                       }
                       placeholder="ej: 39.11"
+                      disabled={readOnly}
                     />
                     <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 text-xs pointer-events-none">
                       g

@@ -24,9 +24,19 @@ const INITIAL_PROJECT_STATE = {
  * 
  * @param {object} settings - Settings object from useSettings.
  */
-export default function useCalculator(settings) {
-  const [project, setProject] = useState(INITIAL_PROJECT_STATE);
-  const [history, setHistory] = useLocalStorage("3d_calc_history_v3", []);
+export default function useCalculator(
+  settings,
+  initialProjectState = INITIAL_PROJECT_STATE,
+  skipHistory = false
+) {
+  const [project, setProject] = useState(initialProjectState);
+  
+  // Conditionally use localStorage or basic state for history
+  // Since hooks can't be conditionally called, we handle the flag internally inside useLocalStorage? 
+  // No, useLocalStorage doesn't support skip. Let's just use useLocalStorage and if skipHistory is true, we ignore it.
+  // Actually, to prevent key collisions, we can use a dummy key if skipHistory is true.
+  const historyKey = skipHistory ? "3d_calc_history_dummy" : "3d_calc_history_v3";
+  const [history, setHistory] = useLocalStorage(historyKey, []);
 
   // Update top-level project fields (projectName, profitMultiplier, etc.)
   const updateProjectField = (key, value) => {
@@ -185,6 +195,29 @@ export default function useCalculator(settings) {
     setHistory((prev) => prev.filter((item) => item.id !== id));
   };
 
+  // Update a specific history item
+  const updateHistoryItem = (id, updatedProjectDetails, updatedResults) => {
+    if (skipHistory) return;
+    setHistory((prev) =>
+      prev.map((item) =>
+        item.id === id
+          ? {
+              ...item,
+              details: { ...updatedProjectDetails },
+              results: { ...updatedResults },
+            }
+          : item
+      )
+    );
+  };
+
+  // Load a saved calculation back into active edit mode
+  const loadProject = (savedDetails) => {
+    // Deep clone the plates just to be safe
+    const parsedPlates = savedDetails.plates.map(p => ({...p}));
+    setProject({ ...savedDetails, plates: parsedPlates });
+  };
+
   return {
     project,
     results,
@@ -195,6 +228,8 @@ export default function useCalculator(settings) {
     updatePlate,
     resetProject,
     saveToHistory,
-    deleteFromHistory
+    updateHistoryItem,
+    deleteFromHistory,
+    loadProject
   };
 }

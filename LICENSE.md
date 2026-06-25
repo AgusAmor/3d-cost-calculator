@@ -1,4 +1,4 @@
-# Copyright (c) 2026 AgusAmor. All rights reserved.
+**Copyright (c) 2026 AgusAmor. All rights reserved.**
 
 This software and all associated source code, design elements, assets, and documentation are the exclusive property of AgusAmor (Agustín Amor).
 
@@ -6,7 +6,7 @@ This application was created solely by AgusAmor. Unauthorized copying, modificat
 
 ---
 
-# Propiedad exclusiva de AgusAmor (Agustín Amor). Todos los derechos reservados.
+**Propiedad exclusiva de AgusAmor (Agustín Amor). Todos los derechos reservados.**
 
 Este software y todo el código fuente asociado, elementos de diseño, recursos y documentación son propiedad exclusiva de AgusAmor.
 

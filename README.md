@@ -26,7 +26,8 @@
 *   **Tiempo de Impresión:** Incorporación proporcional del consumo eléctrico y el desgaste de la impresora por hora activa.
 
 ### 💰 2. Proyección de Ganancias
-*   Define márgenes de ganancia personalizados de forma porcentual o añade una tarifa de servicio fija por hora.
+*   Define un multiplicador de ganancia directo (por ejemplo, x6) sobre el costo total de producción.
+
 
 ### 📋 3. Exportación de Presupuestos
 *   **Formato Tabla:** Vista resumida y clara de todos los costos desglosados.

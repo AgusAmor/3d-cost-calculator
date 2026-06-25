@@ -39,10 +39,12 @@ export default function SummarySection({
   settings,
 }) {
   const [selectedQuote, setSelectedQuote] = useState(null);
+  const [activeQuote, setActiveQuote] = useState(null);
   const [quoteModalMode, setQuoteModalMode] = useState("view");
   const { confirm } = useConfirm();
 
   const openQuoteModal = (item, mode) => {
+    setActiveQuote(item);
     setSelectedQuote(item);
     setQuoteModalMode(mode);
   };
@@ -216,12 +218,12 @@ export default function SummarySection({
         )}
       </div>
 
-      {selectedQuote && (
+      {activeQuote && (
         <QuoteModal
-          key={selectedQuote.id}
+          key={activeQuote.id}
           isOpen={!!selectedQuote}
           onClose={() => setSelectedQuote(null)}
-          item={selectedQuote}
+          item={activeQuote}
           settings={settings}
           updateHistoryItem={updateHistoryItem}
           deleteFromHistory={deleteFromHistory}

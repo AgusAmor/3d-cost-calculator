@@ -44,3 +44,7 @@ When implementing features, keep the state modular and centralized. Save configu
 
 1. **Modals**: All modal dialogs (Quotes, Filaments) must use the base `Modal` component (`src/components/ui/Modal.jsx`), which utilizes React Portals (`createPortal`) to escape CSS boundaries and support sticky footers.
 2. **Confirmations**: Never use native `window.confirm()`. Always use the `useConfirm` hook provided by `ConfirmContext` to trigger the custom `ConfirmModal` for destructive actions.
+3. **Animations & Transitions**:
+   - **Mode Switches**: Avoid abrupt conditional rendering (mounting/unmounting) for view-to-edit transitions. Keep elements in the DOM and use CSS transitions (`max-w-0`, `max-h-0`, `opacity-0`, `scale`) to achieve fluid, symmetrical expanding/collapsing animations. Use the `.btn-secondary` class for consistent action button animations.
+   - **Lists**: List additions and removals (e.g., plates, filaments) must use `@formkit/auto-animate`. Apply the `useAutoAnimate` hook to the parent container. **Important**: Ensure the direct children of the auto-animate container do *not* have manual CSS `transition` properties (like `transition-all`) to avoid conflicting FLIP calculations.
+   - **Modal Exiting**: To allow CSS exit animations to play fully, modals must not be unmounted instantly by parent components. Use an "active item" cache pattern (e.g., `activeQuote` or `activeFilament`) so the modal remains mounted with its data while `isOpen` evaluates to false.

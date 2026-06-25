@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 import {
   FiSliders,
   FiLayers,
@@ -31,24 +32,31 @@ export default function SettingsSection({
   deleteFilament,
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [filamentsRef] = useAutoAnimate();
   const [selectedFilament, setSelectedFilament] = useState(null);
+  const [activeFilament, setActiveFilament] = useState(null);
   const [filamentModalMode, setFilamentModalMode] = useState("view");
   const [isAddingFilament, setIsAddingFilament] = useState(false);
+  const [activeIsAdding, setActiveIsAdding] = useState(false);
   const { confirm } = useConfirm();
 
   const openFilamentModal = (filament, mode) => {
     if (mode === "add") {
       setIsAddingFilament(true);
+      setActiveIsAdding(true);
       setSelectedFilament(null);
+      setActiveFilament(null);
     } else {
       setIsAddingFilament(false);
+      setActiveIsAdding(false);
       setSelectedFilament(filament);
+      setActiveFilament(filament);
     }
     setFilamentModalMode(mode);
   };
 
   return (
-    <div className="bg-slate-900/60 backdrop-blur-md border border-slate-800 rounded-2xl p-6 shadow-xl space-y-6">
+    <div className="bg-slate-900/60 backdrop-blur-md border border-slate-800 rounded-2xl p-6 shadow-xl">
       <div 
         className="flex items-center justify-between border-b border-slate-850 pb-3 cursor-pointer group"
         onClick={() => setIsOpen(!isOpen)}
@@ -61,9 +69,12 @@ export default function SettingsSection({
         </div>
       </div>
 
-      {isOpen && (
-        <div className="space-y-6">
-          {/* Basic Settings Form */}
+      <div 
+        className={`grid transition-all duration-300 ease-in-out ${isOpen ? 'grid-rows-[1fr] opacity-100 mt-6' : 'grid-rows-[0fr] opacity-0 mt-0'}`}
+      >
+        <div className="overflow-hidden">
+          <div className="space-y-6">
+            {/* Basic Settings Form */}
           <div className="grid grid-cols-1 gap-4">
             <div>
               <label className="block text-sm font-medium text-slate-400 mb-1">
@@ -160,7 +171,7 @@ export default function SettingsSection({
             </button>
 
             {/* Filament List */}
-            <div className="rounded-lg border border-slate-800 bg-slate-950/30 overflow-hidden divide-y divide-slate-800">
+            <div className="rounded-lg border border-slate-800 bg-slate-950/30 overflow-hidden divide-y divide-slate-800" ref={filamentsRef}>
               {settings.filaments.map((f) => (
                 <div
                   key={f.id}
@@ -222,17 +233,17 @@ export default function SettingsSection({
             </div>
           </div>
         </div>
-      )}
-
-      {(selectedFilament || isAddingFilament) && (
+      </div>
+    </div>
+      {(activeFilament || activeIsAdding) && (
         <FilamentModal
-          key={selectedFilament ? selectedFilament.id : "new"}
+          key={activeFilament ? activeFilament.id : "new"}
           isOpen={!!selectedFilament || isAddingFilament}
           onClose={() => {
             setSelectedFilament(null);
             setIsAddingFilament(false);
           }}
-          filament={selectedFilament}
+          filament={activeFilament}
           updateFilament={updateFilament}
           addFilament={addFilament}
           deleteFilament={deleteFilament}

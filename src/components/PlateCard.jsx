@@ -67,7 +67,7 @@ export default function PlateCard({
     : 0;
 
   return (
-    <div className="bg-slate-900/60 backdrop-blur-md border border-slate-800 rounded-2xl overflow-hidden shadow-lg transition-all duration-300">
+    <div className="bg-slate-900/60 backdrop-blur-md border border-slate-800 rounded-2xl overflow-hidden shadow-lg">
       {/* Card Title Header Bar */}
       <div 
         className="flex items-center justify-between px-5 py-4 bg-slate-950/60 border-b border-slate-850 cursor-pointer group hover:bg-slate-950/80 transition-colors"
@@ -104,7 +104,7 @@ export default function PlateCard({
               <span className="font-semibold text-slate-200 truncate">
                 {plate.name}
               </span>
-              {!readOnly && (
+              <div className={`transition-all duration-300 overflow-hidden flex items-center ${!readOnly ? 'max-w-8 opacity-100 scale-100' : 'max-w-0 opacity-0 scale-50'}`}>
                 <button
                   onClick={(e) => { e.stopPropagation(); setIsEditingName(true); }}
                   className="text-slate-500 hover:text-slate-350 transition-colors p-1"
@@ -113,7 +113,7 @@ export default function PlateCard({
                 >
                   <FiEdit2 className="text-xs" />
                 </button>
-              )}
+              </div>
             </div>
           )}
 
@@ -126,8 +126,8 @@ export default function PlateCard({
           )}
         </div>
 
-        <div className="flex items-center gap-3">
-          {canDelete && !readOnly && (
+        <div className={`flex items-center transition-all duration-300 ${(!readOnly && canDelete) ? 'gap-3' : 'gap-0'}`}>
+          <div className={`transition-all duration-300 overflow-hidden flex items-center ${(!readOnly && canDelete) ? 'max-w-8 opacity-100 scale-100' : 'max-w-0 opacity-0 scale-50'}`}>
             <button
               onClick={(e) => { e.stopPropagation(); onDelete(); }}
               className="text-slate-500 hover:text-red-400 p-1 rounded transition-colors cursor-pointer"
@@ -136,17 +136,20 @@ export default function PlateCard({
             >
               <FiTrash2 className="text-sm" />
             </button>
-          )}
-          <div className="text-slate-400 group-hover:text-slate-200 p-1 transition-colors">
+          </div>
+          <div className={`text-slate-400 group-hover:text-slate-200 p-1 transition-colors ${(!readOnly && canDelete) ? '' : 'ml-3'}`}>
             {isOpen ? <FiChevronUp /> : <FiChevronDown />}
           </div>
         </div>
       </div>
 
       {/* Expandable Body */}
-      {isOpen && (
-        <div className="p-5 space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div 
+        className={`grid transition-all duration-300 ease-in-out ${isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}
+      >
+        <div className="overflow-hidden">
+          <div className="p-5 space-y-4 border-t border-slate-800/50">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* 1. Time / Duration Settings */}
             <div className="space-y-3 bg-slate-950/30 p-4 rounded-xl border border-slate-850/60">
               <div className="flex items-center gap-2 text-sm font-medium text-slate-300">
@@ -262,7 +265,8 @@ export default function PlateCard({
             </span>
           </div>
         </div>
-      )}
+        </div>
+      </div>
     </div>
   );
 }

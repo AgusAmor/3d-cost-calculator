@@ -73,43 +73,37 @@ export default function FilamentModal({
       title={isAdding ? "Nuevo Filamento" : (isReadOnly ? `Filamento: ${filament.name}` : `Editando: ${filament.name}`)}
       footer={
         <div className="flex flex-col sm:flex-row justify-end gap-3">
-          {isReadOnly ? (
+          {canDelete && (
             <button
-              onClick={() => setMode("edit")}
-              className="bg-violet-600 hover:bg-violet-500 text-white px-5 py-2 rounded-lg font-medium transition-colors flex items-center justify-center gap-2 cursor-pointer w-full sm:w-auto"
+              onClick={handleDelete}
+              className={`btn-secondary ${!isReadOnly ? 'is-visible sm:mr-auto' : ''} bg-red-900/30 text-red-400 hover:bg-red-900/50 hover:text-red-300 rounded-lg font-medium py-2 flex items-center justify-center gap-2 cursor-pointer`}
             >
-              <FiEdit2 /> Habilitar Edición
+              <FiTrash2 /> Eliminar
             </button>
-          ) : (
-            <>
-              {canDelete && (
-                <button
-                  onClick={handleDelete}
-                  className="bg-red-900/30 text-red-400 hover:bg-red-900/50 hover:text-red-300 px-5 py-2 rounded-lg font-medium transition-colors flex items-center justify-center gap-2 sm:mr-auto cursor-pointer"
-                >
-                  <FiTrash2 /> Eliminar
-                </button>
-              )}
-              <button
-                onClick={() => {
-                  if (initialMode === "add") {
-                    onClose();
-                  } else {
-                    setMode("view");
-                  }
-                }}
-                className="text-slate-400 hover:text-slate-200 px-5 py-2 transition-colors cursor-pointer"
-              >
-                Cancelar
-              </button>
-              <button
-                onClick={handleSave}
-                className="bg-emerald-600 hover:bg-emerald-500 text-white px-5 py-2 rounded-lg font-medium transition-colors flex items-center justify-center gap-2 cursor-pointer"
-              >
-                <FiSave /> {isAdding ? "Agregar Filamento" : "Guardar Cambios"}
-              </button>
-            </>
           )}
+          
+          <button
+            onClick={() => {
+              if (initialMode === "add") {
+                onClose();
+              } else {
+                setMode("view");
+              }
+            }}
+            className={`btn-secondary ${!isReadOnly ? 'is-visible' : ''} text-slate-400 hover:text-slate-200 py-2 cursor-pointer`}
+          >
+            Cancelar
+          </button>
+          <button
+            onClick={() => isReadOnly ? setMode("edit") : handleSave()}
+            className={`${isReadOnly ? 'bg-violet-600 hover:bg-violet-500' : 'bg-emerald-600 hover:bg-emerald-500'} text-white px-5 py-2 rounded-lg font-medium transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer w-full sm:w-auto`}
+          >
+            {isReadOnly ? (
+              <><FiEdit2 /> Habilitar Edición</>
+            ) : (
+              <><FiSave /> {isAdding ? "Agregar Filamento" : "Guardar Cambios"}</>
+            )}
+          </button>
         </div>
       }
     >

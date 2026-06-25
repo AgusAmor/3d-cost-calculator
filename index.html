@@ -1,13 +1,31 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>3d-cost-calculator</title>
+    <link rel="icon" type="image/svg+xml" href="/claro.svg" media="(prefers-color-scheme: light)" />
+    <link rel="icon" type="image/svg+xml" href="/oscuro.svg" media="(prefers-color-scheme: dark)" />
+    <link rel="apple-touch-icon" href="/claro.svg" media="(prefers-color-scheme: light)" />
+    <link rel="apple-touch-icon" href="/oscuro.svg" media="(prefers-color-scheme: dark)" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#8b5cf6" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Calculadora de Costos 3D</title>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+              console.log('SW registered: ', registration);
+            })
+            .catch(registrationError => {
+              console.log('SW registration failed: ', registrationError);
+            });
+        });
+      }
+    </script>
   </body>
 </html>

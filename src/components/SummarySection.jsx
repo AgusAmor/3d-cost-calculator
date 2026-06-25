@@ -47,7 +47,7 @@ export default function SummarySection({
       {/* Visual Bar Chart */}
       <div className="space-y-3">
         <span className="block text-sm font-medium text-slate-400">
-          Distribución de Costos y Precio
+          Distribución del Precio
         </span>
         <div className="h-6 w-full bg-slate-950 rounded-full overflow-hidden flex border border-slate-800">
           {filamentPct > 0 && (
@@ -64,13 +64,6 @@ export default function SummarySection({
               title={`Tiempo: ${timePct.toFixed(1)}%`}
             />
           )}
-          {laborPct > 0 && (
-            <div
-              style={{ width: `${laborPct}%` }}
-              className="bg-amber-500 hover:opacity-90 transition-all duration-300"
-              title={`Mano de Obra: ${laborPct.toFixed(1)}%`}
-            />
-          )}
           {profitPct > 0 && (
             <div
               style={{ width: `${profitPct}%` }}
@@ -81,7 +74,7 @@ export default function SummarySection({
         </div>
 
         {/* Legend */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+        <div className="grid grid-cols-3 gap-2 text-xs">
           <div className="flex items-center gap-2 text-slate-350">
             <span className="w-3 h-3 bg-violet-500 rounded-sm inline-block" />
             <span>Filamento ({filamentPct.toFixed(1)}%)</span>
@@ -90,10 +83,7 @@ export default function SummarySection({
             <span className="w-3 h-3 bg-sky-500 rounded-sm inline-block" />
             <span>Tiempo ({timePct.toFixed(1)}%)</span>
           </div>
-          <div className="flex items-center gap-2 text-slate-350">
-            <span className="w-3 h-3 bg-amber-500 rounded-sm inline-block" />
-            <span>Mano de Obra ({laborPct.toFixed(1)}%)</span>
-          </div>
+
           <div className="flex items-center gap-2 text-slate-350">
             <span className="w-3 h-3 bg-emerald-500 rounded-sm inline-block" />
             <span>Ganancia ({profitPct.toFixed(1)}%)</span>
@@ -105,24 +95,33 @@ export default function SummarySection({
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3 border-t border-slate-800">
         <button
           onClick={saveToHistory}
-          className="bg-violet-600 hover:bg-violet-500 text-white font-medium rounded-lg px-4 py-2 transition-colors flex items-center justify-center gap-2 cursor-pointer"
+          className="bg-violet-600 hover:bg-violet-500 text-white font-medium rounded-xl p-3 transition-colors flex flex-col items-center justify-center gap-2 cursor-pointer h-full"
           type="button"
         >
-          <FiSave /> Guardar Cotización
+          <FiSave className="text-xl shrink-0" />
+          <span className="text-center leading-tight text-sm">
+            Guardar Cotización
+          </span>
         </button>
         <button
           onClick={handleExport}
-          className="bg-slate-800 hover:bg-slate-700 text-slate-100 font-medium rounded-lg px-4 py-2 transition-colors flex items-center justify-center gap-2 cursor-pointer"
+          className="bg-slate-800 hover:bg-slate-700 text-slate-100 font-medium rounded-xl p-3 transition-colors flex flex-col items-center justify-center gap-2 cursor-pointer h-full"
           type="button"
         >
-          <FiPrinter /> Exportar PDF / Imprimir
+          <FiPrinter className="text-xl shrink-0" />
+          <span className="text-center leading-tight text-sm">
+            Exportar PDF
+          </span>
         </button>
         <button
           onClick={resetProject}
-          className="bg-slate-950 hover:bg-slate-900 border border-slate-800 text-slate-400 hover:text-slate-200 font-medium rounded-lg px-4 py-2 transition-colors flex items-center justify-center gap-2 cursor-pointer"
+          className="bg-slate-950 hover:bg-slate-900 border border-slate-800 text-slate-400 hover:text-slate-200 font-medium rounded-xl p-3 transition-colors flex flex-col items-center justify-center gap-2 cursor-pointer h-full"
           type="button"
         >
-          <FiRefreshCw /> Nueva Cotización
+          <FiRefreshCw className="text-xl shrink-0" />
+          <span className="text-center leading-tight text-sm">
+            Nueva Cotización
+          </span>
         </button>
       </div>
 
@@ -135,7 +134,7 @@ export default function SummarySection({
         {history.length === 0 ? (
           <div className="text-center py-6 text-slate-500 text-sm border border-dashed border-slate-800 rounded-xl">
             No tienes cotizaciones guardadas. Haz clic en "Guardar Cotización"
-            arriba para archivar.
+            para archivar.
           </div>
         ) : (
           <div className="overflow-x-auto rounded-lg border border-slate-800">
@@ -161,7 +160,7 @@ export default function SummarySection({
                     </td>
                     <td className="px-4 py-3">
                       {item.details.plates
-                        ? `${item.details.plates.length} ${item.details.plates.length === 1 ? "Bandeja" : "Bandejas"} (${item.details.plates.reduce((sum, p) => sum + (p.filamentGrams || 0), 0).toFixed(1)}g)`
+                        ? `${item.details.plates.length} ${item.details.plates.length === 1 ? "Placa de Impresión" : "Placas de Impresión"} (${item.details.plates.reduce((sum, p) => sum + Number(p.filamentGrams || 0), 0).toFixed(1)}g)`
                         : `${item.results.selectedFilamentName || "N/A"} (${item.details.filamentGrams || 0}g)`}
                     </td>
                     <td className="px-4 py-3">

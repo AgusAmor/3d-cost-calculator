@@ -9,7 +9,7 @@ const INITIAL_PROJECT_STATE = {
   plates: [
     {
       id: "plate-1",
-      name: "Bandeja 1",
+      name: "Placa de Impresión 1",
       hoursDecimal: 0,
       selectedFilamentId: "", // initialized dynamically
       filamentGrams: 0
@@ -47,7 +47,7 @@ export default function useCalculator(settings) {
           ...prev.plates,
           {
             id: Date.now().toString() + Math.random().toString().slice(-4),
-            name: `Bandeja ${nextIndex}`,
+            name: `Placa de Impresión ${nextIndex}`,
             hoursDecimal: 0,
             selectedFilamentId: defaultFilamentId,
             filamentGrams: 0
@@ -159,7 +159,7 @@ export default function useCalculator(settings) {
       plates: [
         {
           id: "plate-1",
-          name: "Bandeja 1",
+          name: "Placa de Impresión 1",
           hoursDecimal: 0,
           selectedFilamentId: defaultFilamentId,
           filamentGrams: 0

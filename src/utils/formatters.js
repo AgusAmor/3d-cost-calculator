@@ -1,3 +1,13 @@
+export const parseDecimalInput = (val) => {
+  let str = val.replace(/,/g, ".");
+  str = str.replace(/[^0-9.]/g, "");
+  const parts = str.split(".");
+  if (parts.length > 2) {
+    str = parts[0] + "." + parts.slice(1).join("");
+  }
+  return str;
+};
+
 /**
  * Format a number as currency (Argentine Peso / Spanish-friendly default).
  * E.g., 18000 -> "$ 18.000,00"

@@ -1,5 +1,5 @@
 import { FiTrendingUp } from "react-icons/fi";
-import { formatCurrency } from "../utils/formatters";
+import { formatCurrency, parseDecimalInput } from "../utils/formatters";
 
 /**
  * ProfitSection component.
@@ -28,19 +28,21 @@ export default function ProfitSection({
               Ganancia
             </label>
             <div className="relative">
-              <span className="absolute left-3 top-2 text-slate-500 text-sm">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm pointer-events-none">
                 x
               </span>
               <input
-                type="number"
-                min="1"
-                step="0.1"
+                type="text"
+                inputMode="decimal"
                 className="w-full bg-slate-950 border border-slate-800 rounded-lg pl-7 pr-3 py-2 text-slate-200 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500"
                 value={project.profitMultiplier || ""}
                 onChange={(e) =>
-                  updateProjectField("profitMultiplier", Number(e.target.value))
+                  updateProjectField(
+                    "profitMultiplier",
+                    parseDecimalInput(e.target.value),
+                  )
                 }
-                placeholder="e.g. 6"
+                placeholder="ej: 6"
               />
             </div>
           </div>
@@ -51,18 +53,21 @@ export default function ProfitSection({
               Insumos / Extras
             </label>
             <div className="relative">
-              <span className="absolute left-3 top-2 text-slate-500 text-sm">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm pointer-events-none">
                 $
               </span>
               <input
-                type="number"
-                min="0"
+                type="text"
+                inputMode="decimal"
                 className="w-full bg-slate-950 border border-slate-800 rounded-lg pl-7 pr-3 py-2 text-slate-200 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500"
                 value={project.otherCosts || ""}
                 onChange={(e) =>
-                  updateProjectField("otherCosts", Number(e.target.value))
+                  updateProjectField(
+                    "otherCosts",
+                    parseDecimalInput(e.target.value),
+                  )
                 }
-                placeholder="e.g. Caja de empaque, laca"
+                placeholder="ej: Caja, cadena llavero, etc."
               />
             </div>
           </div>

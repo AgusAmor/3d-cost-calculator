@@ -8,7 +8,11 @@ import {
   FiEdit2,
   FiCheck,
 } from "react-icons/fi";
-import { formatCurrency, formatDuration } from "../utils/formatters";
+import {
+  formatCurrency,
+  formatDuration,
+  parseDecimalInput,
+} from "../utils/formatters";
 
 /**
  * PlateCard component.
@@ -46,7 +50,7 @@ export default function PlateCard({
   };
 
   const handleGramsChange = (val) => {
-    onUpdate({ filamentGrams: Number(val) || 0 });
+    onUpdate({ filamentGrams: val });
   };
 
   const handleFilamentChange = (e) => {
@@ -118,7 +122,7 @@ export default function PlateCard({
               onClick={onDelete}
               className="text-slate-500 hover:text-red-400 p-1 rounded transition-colors cursor-pointer"
               type="button"
-              title="Eliminar bandeja"
+              title="Eliminar placa de impresión"
             >
               <FiTrash2 className="text-sm" />
             </button>
@@ -145,19 +149,20 @@ export default function PlateCard({
 
               <div>
                 <label className="block text-xs text-slate-500 mb-1">
-                  Horas en Decimal (Excel)
+                  Horas en Decimal
                 </label>
                 <div className="relative">
                   <input
-                    type="number"
-                    step="0.01"
-                    min="0"
+                    type="text"
+                    inputMode="decimal"
                     className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-1.5 text-sm text-slate-200 focus:outline-none focus:border-violet-500"
                     value={plate.hoursDecimal || ""}
-                    onChange={(e) => handleTimeChange(e.target.value)}
-                    placeholder="e.g. 2.49 (2hs 49m)"
+                    onChange={(e) =>
+                      handleTimeChange(parseDecimalInput(e.target.value))
+                    }
+                    placeholder="ej: 2.49 (2hs 49m)"
                   />
-                  <span className="absolute right-3 top-1.5 text-slate-500 text-xs font-mono">
+                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 text-xs font-mono pointer-events-none">
                     HD
                   </span>
                 </div>
@@ -207,15 +212,16 @@ export default function PlateCard({
                   </label>
                   <div className="relative">
                     <input
-                      type="number"
-                      min="0"
-                      step="0.1"
+                      type="text"
+                      inputMode="decimal"
                       className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-violet-500"
                       value={plate.filamentGrams || ""}
-                      onChange={(e) => handleGramsChange(e.target.value)}
-                      placeholder="e.g. 39.11"
+                      onChange={(e) =>
+                        handleGramsChange(parseDecimalInput(e.target.value))
+                      }
+                      placeholder="ej: 39.11"
                     />
-                    <span className="absolute right-3 top-1.5 text-slate-500 text-xs">
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 text-xs pointer-events-none">
                       g
                     </span>
                   </div>
@@ -236,7 +242,11 @@ export default function PlateCard({
           {/* Subtotal bar at footer of card */}
           <div className="flex justify-between items-center bg-violet-900/20 border border-violet-800/40 rounded-xl p-4 mt-4">
             <span className="text-sm font-medium text-violet-200">
-              Subtotal Bandeja <span className="hidden sm:inline text-xs text-violet-300/60 font-normal">(Tiempo + Material + Scrap)</span>:
+              Subtotal Placa de Impresión{" "}
+              <span className="hidden sm:inline text-xs text-violet-300/60 font-normal">
+                (Tiempo + Material + Scrap)
+              </span>
+              :
             </span>
             <span className="font-mono font-bold text-lg text-violet-300">
               {formatCurrency(breakdown.timeCost + breakdown.filamentCost)}

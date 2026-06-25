@@ -19,7 +19,7 @@ export default function PrintableBudget({ project, results, settings }) {
   });
 
   const totalGrams = results.platesBreakdown.reduce(
-    (sum, p) => sum + (p.filamentGrams || 0),
+    (sum, p) => sum + Number(p.filamentGrams || 0),
     0,
   );
 
@@ -58,7 +58,7 @@ export default function PrintableBudget({ project, results, settings }) {
             </span>
           </div>
           <div>
-            <span className="text-slate-500">Total Bandejas:</span>{" "}
+            <span className="text-slate-500">Total Placas de Impresión:</span>{" "}
             <span className="font-semibold text-slate-900">
               {results.platesBreakdown.length}
             </span>
@@ -80,7 +80,7 @@ export default function PrintableBudget({ project, results, settings }) {
 
       {/* Itemized Cost Breakdown Table */}
       <h2 className="text-lg font-bold text-slate-900 mb-3">
-        Desglose de Costos por Bandeja
+        Desglose de Costos por Placa de Impresión
       </h2>
       <table className="w-full text-left text-sm border-collapse mb-8">
         <thead>

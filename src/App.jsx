@@ -53,7 +53,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 selection:bg-violet-600 selection:text-white pb-12">
       {/* Interactive Main Dashboard View (Hidden during printing) */}
-      <div className="print:hidden max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 space-y-8">
+      <div className="print:hidden max-w-350 mx-auto px-4 sm:px-6 lg:px-8 pt-8 space-y-8">
         {/* Header */}
         <header className="flex flex-col sm:flex-row items-center justify-between border-b border-slate-900 pb-6 gap-4">
           <div className="flex items-center gap-3">
@@ -116,7 +116,7 @@ export default function App() {
               )}
             </div>
 
-            {/* List of Trays (Bandejas) */}
+            {/* List of Trays (Placas de Impresión) */}
             <div className="space-y-4">
               {project.plates.map((plate) => {
                 const breakdown = results.platesBreakdown.find(
@@ -146,8 +146,7 @@ export default function App() {
                 onClick={addPlate}
                 className="w-full bg-slate-900 hover:bg-slate-850 border border-slate-800 border-dashed hover:border-slate-700 text-slate-300 font-medium py-3 rounded-2xl flex items-center justify-center gap-2 transition-all cursor-pointer"
               >
-                <FiPlus className="text-violet-400 text-lg" /> Agregar Bandeja
-                (Placa de Impresión)
+                <FiPlus className="text-violet-400 text-lg" /> Agregar Placa de Impresión
               </button>
             </div>
 

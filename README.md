@@ -42,6 +42,11 @@
 - **Base de datos local:** Listado de filamentos con precio y peso del carrete.
 - **Consumibles y extras:** Costo de boquillas, laca de adherencia y amortización del equipo.
 
+### 🖥️ 5. Interfaz Optimizada
+
+- **Soporte Internacional:** Soporte total para el uso de comas (`,`) como separador decimal en todos los campos numéricos.
+- **Diseño Responsivo:** Disposición visual adaptativa que aprovecha al máximo pantallas panorámicas (Desktop) y se ajusta a dispositivos móviles sin superposiciones.
+
 ---
 
 ## 🚀 Pila Tecnológica

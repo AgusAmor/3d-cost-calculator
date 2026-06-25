@@ -34,3 +34,8 @@ When implementing features, keep the state modular and centralized. Save configu
 - **Printer wear**: Amortization rate of $150/hr direct printer wear.
 - **Scrap**: Multiplier of 1.1 (10% scrap) on both time and material costs.
 - **Profit**: Direct multiplier (default x6) over total base production costs.
+
+## ⌨️ Input Handling Standards
+
+1. **Numeric Inputs**: To fully support decimal commas across all OS locales and prevent negative numbers, do NOT use `<input type="number">`. Instead, use `<input type="text" inputMode="decimal">` and sanitize the value using the `parseDecimalInput` utility from `src/utils/formatters.js`.
+2. **State Updates**: Always ensure numeric properties that are stored as strings (to preserve trailing dots/commas during typing) are explicitly cast to `Number()` before performing mathematical operations (e.g., during `.reduce()` aggregations).

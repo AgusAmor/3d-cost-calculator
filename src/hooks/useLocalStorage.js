@@ -12,7 +12,14 @@ export default function useLocalStorage(key, initialValue) {
   const [storedValue, setStoredValue] = useState(() => {
     try {
       const item = window.localStorage.getItem(key);
-      return item ? JSON.parse(item) : initialValue;
+      if (item) {
+        const parsed = JSON.parse(item);
+        if (typeof parsed === 'object' && parsed !== null && typeof initialValue === 'object' && initialValue !== null && !Array.isArray(initialValue)) {
+          return { ...initialValue, ...parsed };
+        }
+        return parsed;
+      }
+      return initialValue;
     } catch (error) {
       // Fallback in case of storage failure (e.g., private browsing mode restrictions)
       console.error(`Error reading localStorage key "${key}":`, error);

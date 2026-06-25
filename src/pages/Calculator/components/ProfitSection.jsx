@@ -99,7 +99,7 @@ export default function ProfitSection({
             <span className="font-mono text-slate-350">{formatCurrency(results.productionCost)}</span>
           </div>
           <div className="flex justify-between">
-            <span>Mano de Obra Calculada ({results.decimalHours.toFixed(2)}hs * ${project.laborRatePerHour}/hr):</span>
+            <span>Mano de Obra Calculada ({(results.totalDecimalHours || 0).toFixed(2)}hs * ${project.laborRatePerHour || 0}/hr):</span>
             <span className="font-mono text-slate-350">{formatCurrency(results.laborCost)}</span>
           </div>
           <div className="flex justify-between">

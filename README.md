@@ -22,31 +22,35 @@
 ## 🛠️ Características Clave (MVP)
 
 ### 📊 1. Cálculo Detallado de Costos
-*   **Filamento:** Cálculo dinámico basado en los gramos consumidos y el costo del carrete por tipo de material.
-*   **Tiempo de Impresión:** Incorporación proporcional del consumo eléctrico y el desgaste de la impresora por hora activa.
+
+- **Múltiples Bandejas:** Soporte para calcular proyectos grandes desglosados en múltiples placas de impresión, sumando automáticamente los costos.
+- **Filamento:** Cálculo dinámico basado en los gramos consumidos y el costo del carrete por tipo de material.
+- **Tiempo de Impresión:** Incorporación proporcional del consumo eléctrico y el desgaste de la impresora por hora activa.
 
 ### 💰 2. Proyección de Ganancias
-*   Define un multiplicador de ganancia directo (por ejemplo, x6) sobre el costo total de producción.
 
+- Define un multiplicador de ganancia directo (por ejemplo, x6) sobre el costo total de producción de todas las bandejas.
 
 ### 📋 3. Exportación de Presupuestos
-*   **Formato Tabla:** Vista resumida y clara de todos los costos desglosados.
-*   **Formato PDF:** Descarga de presupuestos profesionales listos para enviar al cliente.
+
+- **Formato Tabla:** Vista resumida y clara de todos los costos desglosados.
+- **Formato PDF:** Descarga de presupuestos profesionales listos para enviar al cliente.
 
 ### ⚙️ 4. Panel de Configuración
-*   **Tarifa eléctrica:** Costo por kilovatio hora (kWh).
-*   **Base de datos local:** Listado de filamentos con precio y peso del carrete.
-*   **Consumibles y extras:** Costo de boquillas, laca de adherencia y amortización del equipo.
+
+- **Tarifa eléctrica:** Costo por kilovatio hora (kWh).
+- **Base de datos local:** Listado de filamentos con precio y peso del carrete.
+- **Consumibles y extras:** Costo de boquillas, laca de adherencia y amortización del equipo.
 
 ---
 
 ## 🚀 Pila Tecnológica
 
-| Componente | Tecnología | Propósito |
-| :--- | :--- | :--- |
-| **Framework** | [React](https://reactjs.org/) + [Vite](https://vite.dev/) | Renderizado reactivo y carga ultra rápida |
-| **Estilos** | [Tailwind CSS v4](https://tailwindcss.com/) | Diseño moderno con Glassmorphism y Dark Mode nativo |
-| **Base de datos** | LocalStorage | Persistencia de datos locales sin necesidad de servidor |
+| Componente        | Tecnología                                                | Propósito                                               |
+| :---------------- | :-------------------------------------------------------- | :------------------------------------------------------ |
+| **Framework**     | [React](https://reactjs.org/) + [Vite](https://vite.dev/) | Renderizado reactivo y carga ultra rápida               |
+| **Estilos**       | [Tailwind CSS v4](https://tailwindcss.com/)               | Diseño moderno con Glassmorphism y Dark Mode nativo     |
+| **Base de datos** | LocalStorage                                              | Persistencia de datos locales sin necesidad de servidor |
 
 ---
 

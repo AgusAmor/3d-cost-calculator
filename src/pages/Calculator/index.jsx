@@ -1,10 +1,8 @@
-import { useEffect } from "react";
-import { FiPrinter } from "react-icons/fi";
+import { FiPrinter, FiPlus } from "react-icons/fi";
 import useSettings from "../../hooks/useSettings";
 import useCalculator from "../../hooks/useCalculator";
 import SettingsSection from "./components/SettingsSection";
-import TimeSection from "./components/TimeSection";
-import FilamentSection from "./components/FilamentSection";
+import PlateCard from "./components/PlateCard";
 import ProfitSection from "./components/ProfitSection";
 import SummarySection from "./components/SummarySection";
 import PrintableBudget from "./components/PrintableBudget";
@@ -27,17 +25,13 @@ export default function CalculatorPage() {
     results,
     history,
     updateProjectField,
+    addPlate,
+    removePlate,
+    updatePlate,
     resetProject,
     saveToHistory,
     deleteFromHistory
   } = useCalculator(settings);
-
-  // Set the default filament in project state once filaments are loaded/available
-  useEffect(() => {
-    if (settings.filaments.length > 0 && !project.selectedFilamentId) {
-      updateProjectField("selectedFilamentId", settings.filaments[0].id);
-    }
-  }, [settings.filaments, project.selectedFilamentId, updateProjectField]);
 
   // Handle launching browser PDF export / print mode
   const handleExport = () => {
@@ -73,21 +67,37 @@ export default function CalculatorPage() {
           {/* Left Column: Form Sections */}
           <div className="lg:col-span-2 space-y-6">
             
-            {/* 1. Time inputs */}
-            <TimeSection
-              project={project}
-              results={results}
-              settings={settings}
-              updateProjectField={updateProjectField}
-            />
+            {/* List of Trays (Bandejas) */}
+            <div className="space-y-4">
+              {project.plates.map((plate) => {
+                const breakdown = results.platesBreakdown.find((b) => b.id === plate.id) || {
+                  minutes: 0,
+                  decimalHours: 0,
+                  timeCost: 0,
+                  filamentCost: 0,
+                  selectedFilamentName: "N/A"
+                };
+                return (
+                  <PlateCard
+                    key={plate.id}
+                    plate={plate}
+                    breakdown={breakdown}
+                    settings={settings}
+                    onUpdate={(fields) => updatePlate(plate.id, fields)}
+                    onDelete={() => removePlate(plate.id)}
+                    canDelete={project.plates.length > 1}
+                  />
+                );
+              })}
 
-            {/* 2. Filament inputs */}
-            <FilamentSection
-              project={project}
-              results={results}
-              settings={settings}
-              updateProjectField={updateProjectField}
-            />
+              <button
+                type="button"
+                onClick={addPlate}
+                className="w-full bg-slate-900 hover:bg-slate-850 border border-slate-800 border-dashed hover:border-slate-700 text-slate-300 font-medium py-3 rounded-2xl flex items-center justify-center gap-2 transition-all cursor-pointer"
+              >
+                <FiPlus className="text-violet-400 text-lg" /> Agregar Bandeja (Placa de Impresión)
+              </button>
+            </div>
 
             {/* 3. Profit margin inputs */}
             <ProfitSection

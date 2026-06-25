@@ -147,7 +147,9 @@ export default function SummarySection({
                     <td className="px-4 py-3 text-xs text-slate-500">{item.date}</td>
                     <td className="px-4 py-3 font-medium text-slate-200">{item.projectName}</td>
                     <td className="px-4 py-3">
-                      {item.results.selectedFilamentName} ({item.details.filamentGrams}g)
+                      {item.details.plates
+                        ? `${item.details.plates.length} ${item.details.plates.length === 1 ? 'Bandeja' : 'Bandejas'} (${item.details.plates.reduce((sum, p) => sum + (p.filamentGrams || 0), 0).toFixed(1)}g)`
+                        : `${item.results.selectedFilamentName || 'N/A'} (${item.details.filamentGrams || 0}g)`}
                     </td>
                     <td className="px-4 py-3">{formatDuration(item.results.totalMinutes)}</td>
                     <td className="px-4 py-3 font-bold text-emerald-400">

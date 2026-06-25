@@ -1,11 +1,17 @@
-import { FiPieChart, FiSave, FiPrinter, FiRefreshCw, FiClock } from "react-icons/fi";
-import { formatCurrency, formatDuration } from "../../../utils/formatters";
+import {
+  FiPieChart,
+  FiSave,
+  FiPrinter,
+  FiRefreshCw,
+  FiClock,
+} from "react-icons/fi";
+import { formatCurrency, formatDuration } from "../utils/formatters";
 
 /**
  * SummarySection component.
  * Renders a visual breakdown (bar chart) of cost components, action buttons (Save, Clear, Export),
  * and lists past calculation history records.
- * 
+ *
  * @param {object} project - Current project state.
  * @param {object} results - Calculations derived from useCalculator.
  * @param {array} history - Array of saved calculations.
@@ -21,7 +27,7 @@ export default function SummarySection({
   saveToHistory,
   deleteFromHistory,
   resetProject,
-  handleExport
+  handleExport,
 }) {
   // Compute percentages for the custom visual bar chart
   const { filamentCost, timeCost, laborCost, profit, finalPrice } = results;
@@ -40,7 +46,9 @@ export default function SummarySection({
 
       {/* Visual Bar Chart */}
       <div className="space-y-3">
-        <span className="block text-sm font-medium text-slate-400">Distribución de Costos y Precio</span>
+        <span className="block text-sm font-medium text-slate-400">
+          Distribución de Costos y Precio
+        </span>
         <div className="h-6 w-full bg-slate-950 rounded-full overflow-hidden flex border border-slate-800">
           {filamentPct > 0 && (
             <div
@@ -114,7 +122,7 @@ export default function SummarySection({
           className="bg-slate-950 hover:bg-slate-900 border border-slate-800 text-slate-400 hover:text-slate-200 font-medium rounded-lg px-4 py-2 transition-colors flex items-center justify-center gap-2 cursor-pointer"
           type="button"
         >
-          <FiRefreshCw /> Limpiar Todo
+          <FiRefreshCw /> Nueva Cotización
         </button>
       </div>
 
@@ -126,7 +134,8 @@ export default function SummarySection({
 
         {history.length === 0 ? (
           <div className="text-center py-6 text-slate-500 text-sm border border-dashed border-slate-800 rounded-xl">
-            No tienes cotizaciones guardadas. Haz clic en "Guardar Cotización" arriba para archivar.
+            No tienes cotizaciones guardadas. Haz clic en "Guardar Cotización"
+            arriba para archivar.
           </div>
         ) : (
           <div className="overflow-x-auto rounded-lg border border-slate-800">
@@ -144,14 +153,20 @@ export default function SummarySection({
               <tbody className="divide-y divide-slate-800 text-slate-350">
                 {history.map((item) => (
                   <tr key={item.id} className="hover:bg-slate-850/30">
-                    <td className="px-4 py-3 text-xs text-slate-500">{item.date}</td>
-                    <td className="px-4 py-3 font-medium text-slate-200">{item.projectName}</td>
+                    <td className="px-4 py-3 text-xs text-slate-500">
+                      {item.date}
+                    </td>
+                    <td className="px-4 py-3 font-medium text-slate-200">
+                      {item.projectName}
+                    </td>
                     <td className="px-4 py-3">
                       {item.details.plates
-                        ? `${item.details.plates.length} ${item.details.plates.length === 1 ? 'Bandeja' : 'Bandejas'} (${item.details.plates.reduce((sum, p) => sum + (p.filamentGrams || 0), 0).toFixed(1)}g)`
-                        : `${item.results.selectedFilamentName || 'N/A'} (${item.details.filamentGrams || 0}g)`}
+                        ? `${item.details.plates.length} ${item.details.plates.length === 1 ? "Bandeja" : "Bandejas"} (${item.details.plates.reduce((sum, p) => sum + (p.filamentGrams || 0), 0).toFixed(1)}g)`
+                        : `${item.results.selectedFilamentName || "N/A"} (${item.details.filamentGrams || 0}g)`}
                     </td>
-                    <td className="px-4 py-3">{formatDuration(item.results.totalMinutes)}</td>
+                    <td className="px-4 py-3">
+                      {formatDuration(item.results.totalMinutes)}
+                    </td>
                     <td className="px-4 py-3 font-bold text-emerald-400">
                       {formatCurrency(item.results.finalPrice)}
                     </td>

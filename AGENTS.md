@@ -22,10 +22,20 @@ This document defines the methodology, coding standards, and best practices that
 5. **Git Commit Messages**: Commit messages must be written in Spanish, following the Conventional Commits format (e.g., `feat:`, `fix:`, `docs:`).
 6. **Documentation Updates on Commit Suggestion**: Every time the user asks for a commit name/suggestion, the active agent must analyze the current status of the repository and update the project documentation (`AGENTS.md`, `README.md`, etc.) to match the current progress and state before providing the commit name.
 7. **Implementation Plans**: Always present a detailed implementation plan to the user when the changes or new features are large or complex.
+8. **Script Cleanup**: Whenever a temporary or one-off script is created to perform heavy tasks (like moving files, batch replacing, etc.), it must be deleted immediately after its execution is finished.
 
 ## ⚙️ Project Architecture & Data Models
 
 When implementing features, keep the state modular and centralized. Save configuration values (filament prices, electricity cost, margins) in `localStorage` so they persist between sessions. The project state follows a multi-plate model, meaning a single project can have an array of `plates`, each with its own filament selection, weight, and print time.
+
+### Component Structure
+
+To maintain the Single Responsibility Principle, components must be grouped functionally within `src/components/`:
+- `/layout`: Major page sections and wrappers (e.g. `SettingsSection`, `SummarySection`, `ProfitSection`).
+- `/plates`: Everything related to the print plates list (e.g. `PlateCard`, `PlateHeader`).
+- `/settings`: Settings forms and sub-modules (e.g. `GeneralSettingsForm`, `FilamentCatalog`, `FilamentModal`).
+- `/history`: Historical quotes and history viewing (e.g. `QuotesHistory`, `CurrentBudgetSummary`, `QuoteModal`).
+- `/ui`: Reusable primitive components (e.g. `Modal`, `ConfirmModal`).
 
 ### Default Variables (Reference)
 

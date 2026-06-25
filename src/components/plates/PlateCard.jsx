@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FiClock, FiDisc } from "react-icons/fi";
-import { formatCurrency, formatDuration, parseDecimalInput } from "../utils/formatters";
+import { formatCurrency, formatDuration, parseDecimalInput } from "../../utils/formatters";
 import PlateHeader from "./PlateHeader";
 
 /**

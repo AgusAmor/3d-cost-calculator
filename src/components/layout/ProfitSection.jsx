@@ -1,5 +1,5 @@
 import { FiTrendingUp } from "react-icons/fi";
-import { formatCurrency, parseDecimalInput } from "../utils/formatters";
+import { formatCurrency, parseDecimalInput } from "../../utils/formatters";
 
 /**
  * ProfitSection component.

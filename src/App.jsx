@@ -3,11 +3,11 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { FiPrinter, FiPlus, FiEdit2, FiCheck, FiBox } from "react-icons/fi";
 import useSettings from "./hooks/useSettings";
 import useCalculator from "./hooks/useCalculator";
-import SettingsSection from "./components/SettingsSection";
-import PlateCard from "./components/PlateCard";
-import ProfitSection from "./components/ProfitSection";
-import SummarySection from "./components/SummarySection";
-import PrintableBudget from "./components/PrintableBudget";
+import SettingsSection from "./components/layout/SettingsSection";
+import PlateCard from "./components/plates/PlateCard";
+import ProfitSection from "./components/layout/ProfitSection";
+import SummarySection from "./components/layout/SummarySection";
+import PrintableBudget from "./components/layout/PrintableBudget";
 
 /**
  * Main Calculator Page component.

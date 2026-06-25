@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 import Modal from "./ui/Modal";
 import { FiEdit2, FiSave, FiTrash2 } from "react-icons/fi";
 import { parseDecimalInput } from "../utils/formatters";
@@ -16,6 +17,7 @@ export default function FilamentModal({
 }) {
   const [mode, setMode] = useState(initialMode);
   const [formData, setFormData] = useState({ name: "", price: "", weight: "" });
+  const [footerRef] = useAutoAnimate();
   const { confirm } = useConfirm();
 
   useEffect(() => {
@@ -72,28 +74,32 @@ export default function FilamentModal({
       onClose={onClose} 
       title={isAdding ? "Nuevo Filamento" : (isReadOnly ? `Filamento: ${filament.name}` : `Editando: ${filament.name}`)}
       footer={
-        <div className="flex flex-col sm:flex-row justify-end gap-3">
-          {canDelete && (
-            <button
-              onClick={handleDelete}
-              className={`btn-secondary ${!isReadOnly ? 'is-visible sm:mr-auto' : ''} bg-red-900/30 text-red-400 hover:bg-red-900/50 hover:text-red-300 rounded-lg font-medium py-2 flex items-center justify-center gap-2 cursor-pointer`}
-            >
-              <FiTrash2 /> Eliminar
-            </button>
+        <div className="flex flex-col sm:flex-row justify-end gap-3 w-full" ref={footerRef}>
+          {!isReadOnly && (
+            <div className="flex flex-row gap-3 w-full sm:w-auto sm:mr-auto">
+              {canDelete && (
+                <button
+                  onClick={handleDelete}
+                  className="flex-1 sm:flex-none bg-red-900/30 text-red-400 hover:bg-red-900/50 hover:text-red-300 rounded-lg font-medium py-2 px-5 flex items-center justify-center gap-2 cursor-pointer transition-colors"
+                >
+                  <FiTrash2 /> Eliminar
+                </button>
+              )}
+              
+              <button
+                onClick={() => {
+                  if (initialMode === "add") {
+                    onClose();
+                  } else {
+                    setMode("view");
+                  }
+                }}
+                className="flex-1 sm:flex-none text-slate-400 hover:text-slate-200 py-2 px-5 cursor-pointer transition-colors"
+              >
+                Cancelar
+              </button>
+            </div>
           )}
-          
-          <button
-            onClick={() => {
-              if (initialMode === "add") {
-                onClose();
-              } else {
-                setMode("view");
-              }
-            }}
-            className={`btn-secondary ${!isReadOnly ? 'is-visible' : ''} text-slate-400 hover:text-slate-200 py-2 cursor-pointer`}
-          >
-            Cancelar
-          </button>
           <button
             onClick={() => isReadOnly ? setMode("edit") : handleSave()}
             className={`${isReadOnly ? 'bg-violet-600 hover:bg-violet-500' : 'bg-emerald-600 hover:bg-emerald-500'} text-white px-5 py-2 rounded-lg font-medium transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer w-full sm:w-auto`}

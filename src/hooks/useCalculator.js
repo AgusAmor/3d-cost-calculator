@@ -129,12 +129,14 @@ export default function useCalculator(settings) {
 
     const totalDecimalHours = totalMinutes / 60;
     const laborCost = totalDecimalHours * (project.laborRatePerHour || 0);
-    const other = Number(project.otherCosts) || 0;
-    const productionCost = totalTimeCost + totalFilamentCost + other;
+    const productionCost = totalTimeCost + totalFilamentCost;
 
     const totalBase = productionCost + laborCost;
-    const finalPrice = totalBase * (project.profitMultiplier || 1);
-    const profit = finalPrice - totalBase;
+    const baseWithProfit = totalBase * (project.profitMultiplier || 1);
+    const profit = baseWithProfit - totalBase;
+
+    const other = Number(project.otherCosts) || 0;
+    const finalPrice = baseWithProfit + other;
 
     return {
       totalMinutes,

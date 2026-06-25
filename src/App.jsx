@@ -1,4 +1,5 @@
-import { FiPrinter, FiPlus } from "react-icons/fi";
+import { useState } from "react";
+import { FiPrinter, FiPlus, FiEdit2, FiCheck, FiBox } from "react-icons/fi";
 import useSettings from "./hooks/useSettings";
 import useCalculator from "./hooks/useCalculator";
 import SettingsSection from "./components/SettingsSection";
@@ -13,6 +14,9 @@ import PrintableBudget from "./components/PrintableBudget";
  * modular input/display panels, and printable PDF layouts.
  */
 export default function App() {
+  const [isEditingProjectName, setIsEditingProjectName] = useState(false);
+  const [tempProjectName, setTempProjectName] = useState("");
+
   const { settings, updateSetting, addFilament, deleteFilament } =
     useSettings();
 
@@ -32,6 +36,18 @@ export default function App() {
   // Handle launching browser PDF export / print mode
   const handleExport = () => {
     window.print();
+  };
+
+  const startEditingProject = () => {
+    setTempProjectName(project.projectName);
+    setIsEditingProjectName(true);
+  };
+
+  const handleProjectNameSave = () => {
+    if (tempProjectName.trim()) {
+      updateProjectField("projectName", tempProjectName.trim());
+    }
+    setIsEditingProjectName(false);
   };
 
   return (
@@ -62,6 +78,44 @@ export default function App() {
         <main className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Left Column: Form Sections */}
           <div className="lg:col-span-2 space-y-6">
+
+            {/* Project Name Editor */}
+            <div className="bg-slate-900/60 backdrop-blur-md border border-slate-800 rounded-2xl px-5 py-4 shadow-lg flex items-center gap-3">
+              <FiBox className="text-violet-400 text-xl shrink-0" />
+              {isEditingProjectName ? (
+                <div className="flex items-center gap-2 w-full max-w-sm">
+                  <input
+                    type="text"
+                    className="w-full bg-slate-950 border border-slate-700 rounded px-3 py-1 text-sm text-slate-100 focus:outline-none focus:border-violet-500"
+                    value={tempProjectName}
+                    onChange={(e) => setTempProjectName(e.target.value)}
+                    onBlur={handleProjectNameSave}
+                    onKeyDown={(e) => e.key === "Enter" && handleProjectNameSave()}
+                    autoFocus
+                  />
+                  <button
+                    onClick={handleProjectNameSave}
+                    className="text-emerald-400 hover:text-emerald-300 transition-colors cursor-pointer"
+                  >
+                    <FiCheck className="text-lg" />
+                  </button>
+                </div>
+              ) : (
+                <div className="flex items-center gap-2">
+                  <h2 className="text-lg font-semibold text-slate-200">
+                    {project.projectName}
+                  </h2>
+                  <button
+                    onClick={startEditingProject}
+                    className="text-slate-500 hover:text-slate-350 transition-colors mt-0.5 cursor-pointer"
+                    title="Editar nombre del proyecto"
+                  >
+                    <FiEdit2 className="text-sm" />
+                  </button>
+                </div>
+              )}
+            </div>
+
             {/* List of Trays (Bandejas) */}
             <div className="space-y-4">
               {project.plates.map((plate) => {
@@ -103,14 +157,6 @@ export default function App() {
               results={results}
               updateProjectField={updateProjectField}
             />
-
-            {/* 4. Global Variables catalog section */}
-            <SettingsSection
-              settings={settings}
-              updateSetting={updateSetting}
-              addFilament={addFilament}
-              deleteFilament={deleteFilament}
-            />
           </div>
 
           {/* Right Column: Visual Summary and History */}
@@ -123,6 +169,14 @@ export default function App() {
               deleteFromHistory={deleteFromHistory}
               resetProject={resetProject}
               handleExport={handleExport}
+            />
+
+            {/* 4. Global Variables catalog section */}
+            <SettingsSection
+              settings={settings}
+              updateSetting={updateSetting}
+              addFilament={addFilament}
+              deleteFilament={deleteFilament}
             />
           </div>
         </main>

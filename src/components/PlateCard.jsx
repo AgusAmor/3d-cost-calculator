@@ -234,11 +234,11 @@ export default function PlateCard({
           </div>
 
           {/* Subtotal bar at footer of card */}
-          <div className="flex justify-between items-center text-xs border-t border-slate-850/80 pt-3 text-slate-450">
-            <span>
-              Costo Acumulado Bandeja (Tiempo + Material + 10% Scrap):
+          <div className="flex justify-between items-center bg-violet-900/20 border border-violet-800/40 rounded-xl p-4 mt-4">
+            <span className="text-sm font-medium text-violet-200">
+              Subtotal Bandeja <span className="hidden sm:inline text-xs text-violet-300/60 font-normal">(Tiempo + Material + Scrap)</span>:
             </span>
-            <span className="font-mono font-semibold text-slate-200">
+            <span className="font-mono font-bold text-lg text-violet-300">
               {formatCurrency(breakdown.timeCost + breakdown.filamentCost)}
             </span>
           </div>

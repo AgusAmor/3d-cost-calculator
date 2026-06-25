@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FiSliders, FiLayers } from "react-icons/fi";
+import { FiSliders, FiLayers, FiChevronDown, FiChevronUp } from "react-icons/fi";
 
 /**
  * SettingsSection component.
@@ -18,6 +18,7 @@ export default function SettingsSection({
   deleteFilament
 }) {
   const [newFilament, setNewFilament] = useState({ name: "", price: "", weight: "" });
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleAddFilament = (e) => {
     e.preventDefault();
@@ -33,13 +34,23 @@ export default function SettingsSection({
 
   return (
     <div className="bg-slate-900/60 backdrop-blur-md border border-slate-800 rounded-2xl p-6 shadow-xl space-y-6">
-      <h2 className="text-xl font-semibold text-slate-100 flex items-center gap-2 border-b border-slate-850 pb-3">
-        <FiSliders className="text-violet-450" /> Variables Globales
-      </h2>
+      <div className="flex items-center justify-between border-b border-slate-850 pb-3">
+        <h2 className="text-xl font-semibold text-slate-100 flex items-center gap-2">
+          <FiSliders className="text-violet-450" /> Variables Globales
+        </h2>
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="text-slate-400 hover:text-slate-200 p-1 cursor-pointer transition-colors"
+          type="button"
+        >
+          {isOpen ? <FiChevronUp /> : <FiChevronDown />}
+        </button>
+      </div>
 
-
-      {/* Basic Settings Form */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      {isOpen && (
+        <div className="space-y-6">
+          {/* Basic Settings Form */}
+      <div className="grid grid-cols-1 gap-4">
         <div>
           <label className="block text-sm font-medium text-slate-400 mb-1">
             Consumo Impresora (Watts)
@@ -96,7 +107,7 @@ export default function SettingsSection({
         </h3>
 
         {/* Add Filament Form */}
-        <form onSubmit={handleAddFilament} className="grid grid-cols-1 sm:grid-cols-4 gap-3 mb-4">
+        <form onSubmit={handleAddFilament} className="grid grid-cols-1 gap-3 mb-4">
           <input
             type="text"
             placeholder="Nombre (e.g. PLA Rojo)"
@@ -175,6 +186,8 @@ export default function SettingsSection({
           </table>
         </div>
       </div>
+        </div>
+      )}
     </div>
   );
 }

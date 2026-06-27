@@ -27,7 +27,7 @@ export default function SummarySection({
   settings,
 }) {
   return (
-    <div className="bg-slate-900/60 backdrop-blur-md border border-slate-800 rounded-2xl p-6 shadow-xl space-y-6">
+    <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-md border border-slate-300 dark:border-slate-800 rounded-2xl p-6 shadow-xl space-y-6">
       <CurrentBudgetSummary
         results={results}
         saveToHistory={saveToHistory}

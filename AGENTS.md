@@ -15,7 +15,7 @@ This document defines the methodology, coding standards, and best practices that
    }
    ```
    Do not use arrow functions for default component exports (e.g., `const Component = () => {}` or `export default () => {}`).
-3. **Styling Approach**: We use **Tailwind CSS v4** for all styling. Rely on modern CSS v4 directives and class structures. Ensure designs feel premium, responsive, clean (e.g. glassmorphism or sleek dark mode), and use harmonious colors.
+3. **Styling Approach**: We use **Tailwind CSS v4** for all styling. Rely on modern CSS v4 directives and class structures. Ensure designs feel premium, responsive, clean (e.g. glassmorphism or sleek design), and use harmonious colors. The application must support **dynamic Light/Dark modes** using Tailwind's `dark:` variant, adapting to the user's system preferences automatically.
 4. **File Naming Conventions**:
    - React Components: PascalCase (e.g., `CostCalculator.jsx`, `SettingsPanel.jsx`).
    - Hooks and utilities: camelCase (e.g., `useLocalStorage.js`, `calculations.js`).

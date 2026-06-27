@@ -57,14 +57,14 @@ export default function Modal({ isOpen, onClose, title, children, footer, maxWid
         aria-hidden="true"
       ></div>
       
-      <div className={`relative w-full ${maxWidth} max-h-[90vh] bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl flex flex-col overflow-hidden transition-all duration-300 ${isVisible ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-4'}`}>
+      <div className={`relative w-full ${maxWidth} max-h-[90vh] bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-2xl shadow-2xl flex flex-col overflow-hidden transition-all duration-300 ${isVisible ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-4'}`}>
         
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-slate-900/50">
-          <h2 className="text-xl font-semibold text-slate-100">{title}</h2>
+        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-300 dark:border-slate-800 bg-slate-900/50">
+          <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">{title}</h2>
           <button
             onClick={onClose}
-            className="text-slate-400 hover:text-slate-200 transition-colors p-1 rounded-lg hover:bg-slate-800"
+            className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 transition-colors p-1 rounded-lg hover:bg-slate-800"
             title="Cerrar"
           >
             <FiX className="text-2xl" />
@@ -78,7 +78,7 @@ export default function Modal({ isOpen, onClose, title, children, footer, maxWid
 
         {/* Footer - Fixed at bottom */}
         {footer && (
-          <div className="px-6 py-4 border-t border-slate-800 bg-slate-900/80 backdrop-blur-sm shrink-0">
+          <div className="px-6 py-4 border-t border-slate-300 dark:border-slate-800 bg-slate-900/80 backdrop-blur-sm shrink-0">
             {footer}
           </div>
         )}

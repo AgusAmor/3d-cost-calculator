@@ -22,15 +22,15 @@ export default function SettingsSection({
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="bg-slate-900/60 backdrop-blur-md border border-slate-800 rounded-2xl p-6 shadow-xl">
+    <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-md border border-slate-300 dark:border-slate-800 rounded-2xl p-6 shadow-xl">
       <div
-        className="flex items-center justify-between border-b border-slate-850 pb-3 cursor-pointer group"
+        className="flex items-center justify-between border-b border-slate-300 dark:border-slate-800 pb-3 cursor-pointer group"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <h2 className="text-xl font-semibold text-slate-100 flex items-center gap-2 group-hover:text-violet-300 transition-colors">
-          <FiSliders className="text-violet-450" /> Configuraciones
+        <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100 flex items-center gap-2 group-hover:text-violet-300 transition-colors">
+          <FiSliders className="text-violet-600 dark:text-violet-400" /> Configuraciones
         </h2>
-        <div className="text-slate-400 group-hover:text-slate-200 p-1 transition-colors">
+        <div className="text-slate-600 dark:text-slate-400 group-hover:text-slate-200 p-1 transition-colors">
           {isOpen ? <FiChevronUp /> : <FiChevronDown />}
         </div>
       </div>

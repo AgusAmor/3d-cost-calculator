@@ -4,6 +4,7 @@
   "description": "Calculadora de costos profesional para impresión 3D.",
   "start_url": "/",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#020617",
   "theme_color": "#8b5cf6",
   "icons": [

@@ -44,8 +44,9 @@
 
 ### 🖥️ 5. Interfaz Optimizada
 
+- **Soporte PWA:** Instalable como aplicación nativa (iOS/Android) con íconos, atajos y funcionamiento offline vía Service Worker.
 - **Soporte Internacional:** Soporte total para el uso de comas (`,`) como separador decimal en todos los campos numéricos.
-- **Diseño Responsivo:** Disposición visual adaptativa que aprovecha al máximo pantallas panorámicas (Desktop) y se ajusta a dispositivos móviles sin superposiciones.
+- **Diseño Responsivo y Temas Dinámicos:** Disposición visual adaptativa y soporte automático para *Modo Claro* y *Modo Oscuro* en función de las preferencias del sistema del usuario.
 
 ---
 
@@ -54,7 +55,7 @@
 | Componente        | Tecnología                                                | Propósito                                               |
 | :---------------- | :-------------------------------------------------------- | :------------------------------------------------------ |
 | **Framework**     | [React](https://reactjs.org/) + [Vite](https://vite.dev/) | Renderizado reactivo y carga ultra rápida               |
-| **Estilos**       | [Tailwind CSS v4](https://tailwindcss.com/)               | Diseño moderno con Glassmorphism y Dark Mode nativo     |
+| **Estilos**       | [Tailwind CSS v4](https://tailwindcss.com/)               | Diseño moderno con soporte nativo dual para Modo Claro/Oscuro |
 | **Base de datos** | LocalStorage                                              | Persistencia de datos locales sin necesidad de servidor |
 
 ---

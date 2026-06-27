@@ -89,7 +89,7 @@ export default function FilamentModal({
               {canDelete && (
                 <button
                   onClick={handleDelete}
-                  className="flex-1 sm:flex-none bg-red-900/30 text-red-400 hover:bg-red-900/50 hover:text-red-300 rounded-lg font-medium py-2 px-5 flex items-center justify-center gap-2 cursor-pointer transition-colors"
+                  className="flex-1 sm:flex-none bg-red-900/30 text-red-600 dark:text-red-400 hover:bg-red-900/50 hover:text-red-300 rounded-lg font-medium py-2 px-5 flex items-center justify-center gap-2 cursor-pointer transition-colors"
                 >
                   <FiTrash2 /> Eliminar
                 </button>
@@ -103,7 +103,7 @@ export default function FilamentModal({
                     setMode("view");
                   }
                 }}
-                className="flex-1 sm:flex-none text-slate-400 hover:text-slate-200 py-2 px-5 cursor-pointer transition-colors"
+                className="flex-1 sm:flex-none text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 py-2 px-5 cursor-pointer transition-colors"
               >
                 Cancelar
               </button>
@@ -134,12 +134,12 @@ export default function FilamentModal({
         {/* Filament Form */}
         <div className="grid grid-cols-1 gap-4">
           <div>
-            <label className="block text-sm font-medium text-slate-400 mb-1">
+            <label className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">
               Nombre
             </label>
             <input
               type="text"
-              className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-slate-200 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500"
+              className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-lg px-3 py-2 text-slate-800 dark:text-slate-200 focus:outline-none focus:border-violet-600 dark:focus:border-violet-500 focus:ring-1 focus:ring-violet-500"
               value={formData.name}
               onChange={(e) =>
                 setFormData({ ...formData, name: e.target.value })
@@ -150,17 +150,17 @@ export default function FilamentModal({
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-slate-400 mb-1">
+              <label className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">
                 Precio
               </label>
               <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm pointer-events-none">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-400 text-sm pointer-events-none">
                   $
                 </span>
                 <input
                   type="text"
                   inputMode="decimal"
-                  className="w-full bg-slate-950 border border-slate-800 rounded-lg pl-7 pr-3 py-2 text-slate-200 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500"
+                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-lg pl-7 pr-3 py-2 text-slate-800 dark:text-slate-200 focus:outline-none focus:border-violet-600 dark:focus:border-violet-500 focus:ring-1 focus:ring-violet-500"
                   value={formData.price}
                   onChange={(e) =>
                     setFormData({
@@ -174,14 +174,14 @@ export default function FilamentModal({
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-400 mb-1">
+              <label className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">
                 Peso (Gramos)
               </label>
               <div className="relative">
                 <input
                   type="text"
                   inputMode="decimal"
-                  className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-slate-200 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500"
+                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-lg px-3 py-2 text-slate-800 dark:text-slate-200 focus:outline-none focus:border-violet-600 dark:focus:border-violet-500 focus:ring-1 focus:ring-violet-500"
                   value={formData.weight}
                   onChange={(e) =>
                     setFormData({
@@ -191,7 +191,7 @@ export default function FilamentModal({
                   }
                   disabled={isReadOnly}
                 />
-                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm pointer-events-none">
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-400 text-sm pointer-events-none">
                   g
                 </span>
               </div>

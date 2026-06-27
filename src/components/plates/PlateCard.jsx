@@ -47,7 +47,7 @@ export default function PlateCard({
     : 0;
 
   return (
-    <div className="bg-slate-900/60 backdrop-blur-md border border-slate-800 rounded-2xl overflow-hidden shadow-lg">
+    <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-md border border-slate-300 dark:border-slate-800 rounded-2xl overflow-hidden shadow-lg">
       <PlateHeader
         plate={plate}
         breakdown={breakdown}
@@ -67,20 +67,20 @@ export default function PlateCard({
           <div className="p-5 space-y-4 border-t border-slate-800/50">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* 1. Time / Duration Settings */}
-            <div className="space-y-3 bg-slate-950/30 p-4 rounded-xl border border-slate-850/60">
-              <div className="flex items-center gap-2 text-sm font-medium text-slate-300">
+            <div className="space-y-3 bg-slate-50/50 dark:bg-slate-950/30 p-4 rounded-xl border border-slate-200 dark:border-slate-800/60">
+              <div className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
                 <FiClock className="text-sky-400" /> Tiempo de Impresión
               </div>
 
               <div>
-                <label className="block text-xs text-slate-500 mb-1">
+                <label className="block text-xs text-slate-500 dark:text-slate-400 mb-1">
                   Horas en Decimal
                 </label>
                 <div className="relative">
                   <input
                     type="text"
                     inputMode="decimal"
-                    className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-1.5 text-sm text-slate-200 focus:outline-none focus:border-violet-500"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-lg px-3 py-1.5 text-sm text-slate-800 dark:text-slate-200 focus:outline-none focus:border-violet-600 dark:focus:border-violet-500"
                     value={plate.hoursDecimal || ""}
                     onChange={(e) =>
                       handleTimeChange(parseDecimalInput(e.target.value))
@@ -88,14 +88,14 @@ export default function PlateCard({
                     placeholder="ej: 2.49 (2hs 49m)"
                     disabled={readOnly}
                   />
-                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 text-xs font-mono pointer-events-none">
+                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-400 text-xs font-mono pointer-events-none">
                     HD
                   </span>
                 </div>
               </div>
 
               <div className="flex justify-between items-center text-xs">
-                <span className="text-slate-400">
+                <span className="text-slate-600 dark:text-slate-400">
                   Duración: {formatDuration(breakdown.minutes)}
                 </span>
                 <span className="text-sky-400 font-mono font-semibold">
@@ -105,18 +105,18 @@ export default function PlateCard({
             </div>
 
             {/* 2. Filament Settings */}
-            <div className="space-y-3 bg-slate-950/30 p-4 rounded-xl border border-slate-850/60">
-              <div className="flex items-center gap-2 text-sm font-medium text-slate-300">
-                <FiDisc className="text-violet-400" /> Material
+            <div className="space-y-3 bg-slate-50/50 dark:bg-slate-950/30 p-4 rounded-xl border border-slate-200 dark:border-slate-800/60">
+              <div className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
+                <FiDisc className="text-violet-600 dark:text-violet-400" /> Material
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 <div>
-                  <label className="block text-xs text-slate-500 mb-1">
+                  <label className="block text-xs text-slate-500 dark:text-slate-400 mb-1">
                     Filamento
                   </label>
                   <select
-                    className="w-full bg-slate-950 border border-slate-800 rounded-lg px-2 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-violet-500 cursor-pointer"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-lg px-2 py-1.5 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-violet-600 dark:focus:border-violet-500 cursor-pointer"
                     value={
                       plate.selectedFilamentId ||
                       settings.filaments[0]?.id ||
@@ -134,14 +134,14 @@ export default function PlateCard({
                 </div>
 
                 <div>
-                  <label className="block text-xs text-slate-500 mb-1">
+                  <label className="block text-xs text-slate-500 dark:text-slate-400 mb-1">
                     Gramos
                   </label>
                   <div className="relative">
                     <input
                       type="text"
                       inputMode="decimal"
-                      className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-violet-500"
+                      className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-lg px-3 py-1.5 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-violet-600 dark:focus:border-violet-500"
                       value={plate.filamentGrams || ""}
                       onChange={(e) =>
                         handleGramsChange(parseDecimalInput(e.target.value))
@@ -149,7 +149,7 @@ export default function PlateCard({
                       placeholder="ej: 39.11"
                       disabled={readOnly}
                     />
-                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 text-xs pointer-events-none">
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-400 text-xs pointer-events-none">
                       g
                     </span>
                   </div>
@@ -157,10 +157,10 @@ export default function PlateCard({
               </div>
 
               <div className="flex justify-between items-center text-xs">
-                <span className="text-slate-400">
+                <span className="text-slate-600 dark:text-slate-400">
                   Precio/g: {formatCurrency(pricePerGram)}
                 </span>
-                <span className="text-violet-400 font-mono font-semibold">
+                <span className="text-violet-600 dark:text-violet-400 font-mono font-semibold">
                   {formatCurrency(breakdown.filamentCost)}
                 </span>
               </div>
@@ -168,15 +168,15 @@ export default function PlateCard({
           </div>
 
           {/* Subtotal bar at footer of card */}
-          <div className="flex justify-between items-center bg-violet-900/20 border border-violet-800/40 rounded-xl p-4 mt-4">
-            <span className="text-sm font-medium text-violet-200">
+          <div className="flex justify-between items-center bg-violet-100 dark:bg-violet-900/20 border border-violet-200 dark:border-violet-800/40 rounded-xl p-4 mt-4">
+            <span className="text-sm font-medium text-violet-900 dark:text-violet-200">
               Subtotal Placa de Impresión{" "}
-              <span className="hidden sm:inline text-xs text-violet-300/60 font-normal">
+              <span className="hidden sm:inline text-xs text-violet-700/80 dark:text-violet-300/60 font-normal">
                 (Tiempo + Material + Scrap)
               </span>
               :
             </span>
-            <span className="font-mono font-bold text-lg text-violet-300">
+            <span className="font-mono font-bold text-lg text-violet-800 dark:text-violet-300">
               {formatCurrency(breakdown.timeCost + breakdown.filamentCost)}
             </span>
           </div>

@@ -16,26 +16,26 @@ export default function ProfitSection({
   readOnly = false,
 }) {
   return (
-    <div className="bg-slate-900/60 backdrop-blur-md border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
-      <h2 className="text-xl font-semibold text-slate-100 flex items-center gap-2 border-b border-slate-850 pb-3">
-        <FiTrendingUp className="text-emerald-400" /> Total
+    <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-md border border-slate-300 dark:border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+      <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100 flex items-center gap-2 border-b border-slate-300 dark:border-slate-800 pb-3">
+        <FiTrendingUp className="text-emerald-600 dark:text-emerald-400" /> Total
       </h2>
 
       <div className="space-y-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {/* Profit Multiplier */}
           <div>
-            <label className="block text-sm font-medium text-slate-400 mb-1">
+            <label className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">
               Ganancia
             </label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm pointer-events-none">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-400 text-sm pointer-events-none">
                 x
               </span>
               <input
                 type="text"
                 inputMode="decimal"
-                className="w-full bg-slate-950 border border-slate-800 rounded-lg pl-7 pr-3 py-2 text-slate-200 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500"
+                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-lg pl-7 pr-3 py-2 text-slate-800 dark:text-slate-200 focus:outline-none focus:border-violet-600 dark:focus:border-violet-500 focus:ring-1 focus:ring-violet-500"
                 value={project.profitMultiplier || ""}
                 onChange={(e) =>
                   updateProjectField(
@@ -51,17 +51,17 @@ export default function ProfitSection({
 
           {/* Other Costs */}
           <div>
-            <label className="block text-sm font-medium text-slate-400 mb-1">
+            <label className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">
               Insumos / Extras
             </label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm pointer-events-none">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-400 text-sm pointer-events-none">
                 $
               </span>
               <input
                 type="text"
                 inputMode="decimal"
-                className="w-full bg-slate-950 border border-slate-800 rounded-lg pl-7 pr-3 py-2 text-slate-200 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500"
+                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-lg pl-7 pr-3 py-2 text-slate-800 dark:text-slate-200 focus:outline-none focus:border-violet-600 dark:focus:border-violet-500 focus:ring-1 focus:ring-violet-500"
                 value={project.otherCosts || ""}
                 onChange={(e) =>
                   updateProjectField(
@@ -77,7 +77,7 @@ export default function ProfitSection({
         </div>
 
         {/* Dynamic breakdown */}
-        <div className="text-xs text-slate-400 space-y-2 bg-slate-950/20 p-3 rounded-lg border border-slate-850/40">
+        <div className="text-xs text-slate-600 dark:text-slate-400 space-y-2 bg-slate-100 dark:bg-slate-950/20 p-3 rounded-lg border border-slate-200 dark:border-slate-800/40">
           <div className="flex justify-between">
             <span>Costo de Tiempo (Energía + Desgaste + Scrap):</span>
             <span className="font-mono text-slate-350">
@@ -100,20 +100,20 @@ export default function ProfitSection({
           )}
           <div className="border-t border-slate-800/60 pt-2 flex justify-between">
             <span>Ganancia (x{project.profitMultiplier}):</span>
-            <span className="font-mono text-emerald-400 font-semibold">
+            <span className="font-mono text-emerald-600 dark:text-emerald-400 font-semibold">
               +{formatCurrency(results.profit)}
             </span>
           </div>
         </div>
 
         {/* Suggested Price Card */}
-        <div className="flex justify-between items-center bg-emerald-950/20 border border-emerald-900/30 rounded-xl p-4">
+        <div className="flex justify-between items-center bg-emerald-100 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-900/30 rounded-xl p-4">
           <div>
-            <div className="text-sm font-medium text-emerald-300">
+            <div className="text-sm font-medium text-emerald-900 dark:text-emerald-300">
               Precio Final
             </div>
           </div>
-          <div className="text-2xl font-bold text-emerald-400 font-mono">
+          <div className="text-2xl font-bold text-emerald-600 dark:text-emerald-400 font-mono">
             {formatCurrency(results.finalPrice)}
           </div>
         </div>

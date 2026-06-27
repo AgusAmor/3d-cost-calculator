@@ -64,7 +64,7 @@ export default function QuoteModal({
               ? `Cotización: ${project.projectName}`
               : `Editando: ${project.projectName}`}
           </span>
-          <span className="text-xs text-slate-400 font-normal mt-1">
+          <span className="text-xs text-slate-600 dark:text-slate-400 font-normal mt-1">
             {item.date}
           </span>
         </div>
@@ -78,14 +78,14 @@ export default function QuoteModal({
             <div className="flex flex-row gap-3 w-full sm:w-auto sm:mr-auto">
               <button
                 onClick={handleDelete}
-                className="flex-1 sm:flex-none bg-red-900/30 text-red-400 hover:bg-red-900/50 hover:text-red-300 rounded-lg font-medium py-2 px-5 flex items-center justify-center gap-2 cursor-pointer transition-colors"
+                className="flex-1 sm:flex-none bg-red-900/30 text-red-600 dark:text-red-400 hover:bg-red-900/50 hover:text-red-300 rounded-lg font-medium py-2 px-5 flex items-center justify-center gap-2 cursor-pointer transition-colors"
               >
                 <FiTrash2 /> Eliminar
               </button>
 
               <button
                 onClick={() => setMode("view")}
-                className="flex-1 sm:flex-none text-slate-400 hover:text-slate-200 py-2 px-5 cursor-pointer transition-colors"
+                className="flex-1 sm:flex-none text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 py-2 px-5 cursor-pointer transition-colors"
               >
                 Cancelar
               </button>
@@ -147,9 +147,9 @@ export default function QuoteModal({
             <button
               type="button"
               onClick={addPlate}
-              className="w-full bg-slate-900 hover:bg-slate-850 border border-slate-800 border-dashed hover:border-slate-700 text-slate-300 font-medium py-3 rounded-2xl flex items-center justify-center gap-2 transition-all cursor-pointer"
+              className="w-full bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-300 dark:border-slate-800 border-dashed hover:border-slate-400 dark:hover:border-slate-700 text-slate-700 dark:text-slate-300 font-medium py-3 rounded-2xl flex items-center justify-center gap-2 transition-all cursor-pointer"
             >
-              <FiPlus className="text-violet-400 text-lg" /> Agregar Placa
+              <FiPlus className="text-violet-600 dark:text-violet-400 text-lg" /> Agregar Placa
             </button>
           </div>
         </div>

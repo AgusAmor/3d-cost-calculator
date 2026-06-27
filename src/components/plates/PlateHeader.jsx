@@ -24,17 +24,17 @@ export default function PlateHeader({
 
   return (
     <div
-      className="flex items-center justify-between px-5 py-4 bg-slate-950/60 border-b border-slate-850 cursor-pointer group hover:bg-slate-950/80 transition-colors"
+      className="flex items-center justify-between px-5 py-4 bg-slate-100 dark:bg-slate-950/60 border-b border-slate-300 dark:border-slate-800 cursor-pointer group hover:bg-slate-200 dark:hover:bg-slate-950/80 transition-colors"
       onClick={() => setIsOpen(!isOpen)}
     >
       <div className="flex items-center gap-3 flex-1 min-w-0">
-        <FiDisc className="text-violet-400 text-lg shrink-0 animate-spin-slow" />
+        <FiDisc className="text-violet-600 dark:text-violet-400 text-lg shrink-0 animate-spin-slow" />
 
         {isEditingName ? (
           <div className="flex items-center gap-2">
             <input
               type="text"
-              className="bg-slate-900 border border-slate-700 rounded px-2 py-0.5 text-sm text-slate-100 focus:outline-none focus:border-violet-500"
+              className="bg-white dark:bg-slate-900 border border-slate-400 dark:border-slate-700 rounded px-2 py-0.5 text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:border-violet-600 dark:focus:border-violet-500"
               value={tempName}
               onClick={(e) => e.stopPropagation()}
               onChange={(e) => setTempName(e.target.value)}
@@ -49,7 +49,7 @@ export default function PlateHeader({
                   e.stopPropagation();
                   handleNameSave();
                 }}
-                className="text-emerald-400 hover:text-emerald-300 p-1"
+                className="text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 p-1"
                 type="button"
               >
                 <FiCheck />
@@ -58,7 +58,7 @@ export default function PlateHeader({
           </div>
         ) : (
           <div className="flex items-center gap-2 max-w-full">
-            <span className="font-semibold text-slate-200 truncate">
+            <span className="font-semibold text-slate-800 dark:text-slate-200 truncate">
               {plate.name}
             </span>
             <div
@@ -71,7 +71,7 @@ export default function PlateHeader({
                   e.stopPropagation();
                   setIsEditingName(true);
                 }}
-                className="text-slate-500 hover:text-slate-350 transition-colors p-1"
+                className="text-slate-500 dark:text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors p-1"
                 type="button"
                 title="Editar nombre"
               >
@@ -83,7 +83,7 @@ export default function PlateHeader({
 
         {/* Quick Subtotal summary when collapsed */}
         {!isOpen && (
-          <span className="text-xs text-slate-400 font-mono hidden sm:inline ml-4">
+          <span className="text-xs text-slate-600 dark:text-slate-400 font-mono hidden sm:inline ml-4">
             ({formatDuration(breakdown.minutes)} | {plate.filamentGrams}g |{" "}
             {formatCurrency(breakdown.timeCost + breakdown.filamentCost)})
           </span>
@@ -105,7 +105,7 @@ export default function PlateHeader({
               e.stopPropagation();
               onDelete();
             }}
-            className="text-slate-500 hover:text-red-400 p-1 rounded transition-colors cursor-pointer"
+            className="text-slate-500 dark:text-slate-400 hover:text-red-400 p-1 rounded transition-colors cursor-pointer"
             type="button"
             title="Eliminar placa de impresión"
           >
@@ -113,7 +113,7 @@ export default function PlateHeader({
           </button>
         </div>
         <div
-          className={`text-slate-400 group-hover:text-slate-200 p-1 transition-colors ${
+          className={`text-slate-600 dark:text-slate-400 group-hover:text-slate-200 p-1 transition-colors ${
             !readOnly && canDelete ? "" : "ml-3"
           }`}
         >

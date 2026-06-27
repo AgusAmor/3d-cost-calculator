@@ -17,16 +17,16 @@ export default function CurrentBudgetSummary({
 
   return (
     <>
-      <h2 className="text-xl font-semibold text-slate-100 flex items-center gap-2 border-b border-slate-850 pb-3">
+      <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100 flex items-center gap-2 border-b border-slate-300 dark:border-slate-800 pb-3">
         Resumen y Acciones
       </h2>
 
       {/* Visual Bar Chart */}
       <div className="space-y-3">
-        <span className="block text-sm font-medium text-slate-400">
+        <span className="block text-sm font-medium text-slate-600 dark:text-slate-400">
           Distribución del Precio
         </span>
-        <div className="h-6 w-full bg-slate-950 rounded-full overflow-hidden flex border border-slate-800">
+        <div className="h-6 w-full bg-slate-50 dark:bg-slate-950 rounded-full overflow-hidden flex border border-slate-300 dark:border-slate-800">
           {filamentPct > 0 && (
             <div
               style={{ width: `${filamentPct}%` }}
@@ -69,7 +69,7 @@ export default function CurrentBudgetSummary({
       </div>
 
       {/* Action Buttons */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3 border-t border-slate-800">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3 border-t border-slate-300 dark:border-slate-800">
         <button
           onClick={saveToHistory}
           className="bg-violet-600 hover:bg-violet-500 text-white font-medium rounded-xl p-3 transition-colors flex flex-col items-center justify-center gap-2 cursor-pointer h-full"
@@ -82,7 +82,7 @@ export default function CurrentBudgetSummary({
         </button>
         <button
           onClick={handleExport}
-          className="bg-slate-800 hover:bg-slate-700 text-slate-100 font-medium rounded-xl p-3 transition-colors flex flex-col items-center justify-center gap-2 cursor-pointer h-full"
+          className="bg-slate-800 hover:bg-slate-700 text-white dark:text-slate-100 font-medium rounded-xl p-3 transition-colors flex flex-col items-center justify-center gap-2 cursor-pointer h-full"
           type="button"
         >
           <FiPrinter className="text-xl shrink-0" />
@@ -92,7 +92,7 @@ export default function CurrentBudgetSummary({
         </button>
         <button
           onClick={resetProject}
-          className="bg-slate-950 hover:bg-slate-900 border border-slate-800 text-slate-400 hover:text-slate-200 font-medium rounded-xl p-3 transition-colors flex flex-col items-center justify-center gap-2 cursor-pointer h-full"
+          className="bg-slate-50 dark:bg-slate-950 hover:bg-slate-900 border border-slate-300 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 font-medium rounded-xl p-3 transition-colors flex flex-col items-center justify-center gap-2 cursor-pointer h-full"
           type="button"
         >
           <FiRefreshCw className="text-xl shrink-0" />

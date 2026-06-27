@@ -54,25 +54,25 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 selection:bg-violet-600 selection:text-white pb-12">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 selection:bg-violet-600 selection:text-white pb-12">
       {/* Interactive Main Dashboard View (Hidden during printing) */}
       <div className="print:hidden max-w-350 mx-auto px-4 sm:px-6 lg:px-8 pt-8 space-y-8">
         {/* Header */}
-        <header className="flex flex-col sm:flex-row items-center justify-between border-b border-slate-900 pb-6 gap-4">
+        <header className="flex flex-col sm:flex-row items-center justify-between border-b border-slate-200 dark:border-slate-900 pb-6 gap-4">
           <div className="flex items-center gap-3">
-            <div className="p-3 bg-violet-600/10 border border-violet-500/20 rounded-2xl">
-              <FiPrinter className="text-violet-400 text-3xl" />
+            <div className="p-3 bg-violet-100 dark:bg-violet-600/10 border border-violet-300 dark:border-violet-500/20 rounded-2xl">
+              <FiPrinter className="text-violet-600 dark:text-violet-400 text-3xl" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-white via-slate-200 to-slate-400">
+              <h1 className="text-2xl font-bold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-slate-900 dark:from-white via-slate-800 dark:via-slate-200 to-slate-600 dark:to-slate-400">
                 Calculadora de Costos 3D
               </h1>
-              <p className="text-sm text-slate-400">
+              <p className="text-sm text-slate-600 dark:text-slate-400">
                 Automatización y presupuestos inteligentes para impresión 3D
               </p>
             </div>
           </div>
-          <div className="text-xs text-slate-500 text-right">
+          <div className="text-xs text-slate-500 dark:text-slate-400 text-right">
             <span>Versión 1.0.0 (MVP)</span>
           </div>
         </header>
@@ -83,13 +83,13 @@ export default function App() {
           <div className="lg:col-span-2 space-y-6">
 
             {/* Project Name Editor */}
-            <div className="bg-slate-900/60 backdrop-blur-md border border-slate-800 rounded-2xl px-5 py-4 shadow-lg flex items-center gap-3">
-              <FiBox className="text-violet-400 text-xl shrink-0" />
+            <div className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-md border border-slate-300 dark:border-slate-800 rounded-2xl px-5 py-4 shadow-lg flex items-center gap-3">
+              <FiBox className="text-violet-600 dark:text-violet-400 text-xl shrink-0" />
               {isEditingProjectName ? (
                 <div className="flex items-center gap-2 w-full max-w-sm">
                   <input
                     type="text"
-                    className="w-full bg-slate-950 border border-slate-700 rounded px-3 py-1 text-sm text-slate-100 focus:outline-none focus:border-violet-500"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-400 dark:border-slate-700 rounded px-3 py-1 text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:border-violet-600 dark:focus:border-violet-500"
                     value={tempProjectName}
                     onChange={(e) => setTempProjectName(e.target.value)}
                     onBlur={handleProjectNameSave}
@@ -98,19 +98,19 @@ export default function App() {
                   />
                   <button
                     onClick={handleProjectNameSave}
-                    className="text-emerald-400 hover:text-emerald-300 transition-colors cursor-pointer"
+                    className="text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors cursor-pointer"
                   >
                     <FiCheck className="text-lg" />
                   </button>
                 </div>
               ) : (
                 <div className="flex items-center gap-2">
-                  <h2 className="text-lg font-semibold text-slate-200">
+                  <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-200">
                     {project.projectName}
                   </h2>
                   <button
                     onClick={startEditingProject}
-                    className="text-slate-500 hover:text-slate-350 transition-colors mt-0.5 cursor-pointer"
+                    className="text-slate-500 dark:text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors mt-0.5 cursor-pointer"
                     title="Editar nombre del proyecto"
                   >
                     <FiEdit2 className="text-sm" />
@@ -147,9 +147,9 @@ export default function App() {
               <button
                 type="button"
                 onClick={addPlate}
-                className="w-full bg-slate-900 hover:bg-slate-850 border border-slate-800 border-dashed hover:border-slate-700 text-slate-300 font-medium py-3 rounded-2xl flex items-center justify-center gap-2 transition-all cursor-pointer"
+                className="w-full bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-300 dark:border-slate-800 border-dashed hover:border-slate-400 dark:hover:border-slate-700 text-slate-700 dark:text-slate-300 font-medium py-3 rounded-2xl flex items-center justify-center gap-2 transition-all cursor-pointer"
               >
-                <FiPlus className="text-violet-400 text-lg" /> Agregar Placa de Impresión
+                <FiPlus className="text-violet-600 dark:text-violet-400 text-lg" /> Agregar Placa de Impresión
               </button>
             </div>
 

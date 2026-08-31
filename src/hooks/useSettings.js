@@ -1,4 +1,7 @@
-import useLocalStorage from "./useLocalStorage";
+import { useState, useEffect } from "react";
+import { doc, onSnapshot, setDoc } from "firebase/firestore";
+import { db } from "../config/firebase";
+import { useAuth } from "../context/AuthContext";
 
 const DEFAULT_SETTINGS = {
   electricityCost: 120.0, // Cost per kWh ($120)
@@ -16,42 +19,79 @@ const DEFAULT_SETTINGS = {
  * Centralizes variables like power cost, printer wear, and filament list.
  */
 export default function useSettings() {
-  const [settings, setSettings] = useLocalStorage("3d_calc_settings_v2", DEFAULT_SETTINGS);
+  const { user } = useAuth();
+  const [settings, setSettings] = useState(DEFAULT_SETTINGS);
+  const [loadingSettings, setLoadingSettings] = useState(true);
+
+  // Escuchar configuración desde Firestore
+  useEffect(() => {
+    if (!user) return;
+    
+    const docRef = doc(db, "users", user.uid, "config", "settings");
+    const unsubscribe = onSnapshot(docRef, (docSnap) => {
+      if (docSnap.exists()) {
+        setSettings(docSnap.data());
+      } else {
+        // Si no existe el documento para el nuevo usuario, guardamos los valores por defecto
+        setDoc(docRef, DEFAULT_SETTINGS).catch(console.error);
+        setSettings(DEFAULT_SETTINGS);
+      }
+      setLoadingSettings(false);
+    }, (error) => {
+      console.error("Error al escuchar configuraciones:", error);
+      setLoadingSettings(false);
+    });
+
+    return () => unsubscribe();
+  }, [user]);
+
+  // Helper para guardar en Firestore (optimista)
+  const saveSettingsToFirestore = (newSettings) => {
+    setSettings(newSettings); // Optimistic UI update
+    if (user) {
+      const docRef = doc(db, "users", user.uid, "config", "settings");
+      setDoc(docRef, newSettings, { merge: true }).catch(err => 
+        console.error("Error saving settings to Firestore:", err)
+      );
+    }
+  };
 
   // Update a single setting parameter
   const updateSetting = (key, value) => {
-    setSettings((prev) => ({
-      ...prev,
-      [key]: value
-    }));
+    const newSettings = { ...settings, [key]: value };
+    saveSettingsToFirestore(newSettings);
   };
 
   // Add a new filament type to the catalog list
   const addFilament = (filament) => {
-    setSettings((prev) => ({
-      ...prev,
-      filaments: [...prev.filaments, { ...filament, id: Date.now().toString() }]
-    }));
+    const newSettings = {
+      ...settings,
+      filaments: [...settings.filaments, { ...filament, id: Date.now().toString() }]
+    };
+    saveSettingsToFirestore(newSettings);
   };
 
   // Update an existing filament in the list
   const updateFilament = (id, updatedFields) => {
-    setSettings((prev) => ({
-      ...prev,
-      filaments: prev.filaments.map((f) => (f.id === id ? { ...f, ...updatedFields } : f))
-    }));
+    const newSettings = {
+      ...settings,
+      filaments: settings.filaments.map((f) => (f.id === id ? { ...f, ...updatedFields } : f))
+    };
+    saveSettingsToFirestore(newSettings);
   };
 
   // Delete a filament from the catalog list
   const deleteFilament = (id) => {
-    setSettings((prev) => ({
-      ...prev,
-      filaments: prev.filaments.filter((f) => f.id !== id)
-    }));
+    const newSettings = {
+      ...settings,
+      filaments: settings.filaments.filter((f) => f.id !== id)
+    };
+    saveSettingsToFirestore(newSettings);
   };
 
   return {
     settings,
+    loadingSettings,
     updateSetting,
     addFilament,
     updateFilament,

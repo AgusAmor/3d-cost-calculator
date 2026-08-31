@@ -1,5 +1,7 @@
-import { useState, useMemo } from "react";
-import useLocalStorage from "./useLocalStorage";
+import { useState, useMemo, useEffect } from "react";
+import { doc, onSnapshot, setDoc } from "firebase/firestore";
+import { db } from "../config/firebase";
+import { useAuth } from "../context/AuthContext";
 
 const INITIAL_PROJECT_STATE = {
   projectName: "Impresión 3D Nueva",
@@ -29,14 +31,43 @@ export default function useCalculator(
   initialProjectState = INITIAL_PROJECT_STATE,
   skipHistory = false
 ) {
+  const { user } = useAuth();
   const [project, setProject] = useState(initialProjectState);
   
-  // Conditionally use localStorage or basic state for history
-  // Since hooks can't be conditionally called, we handle the flag internally inside useLocalStorage? 
-  // No, useLocalStorage doesn't support skip. Let's just use useLocalStorage and if skipHistory is true, we ignore it.
-  // Actually, to prevent key collisions, we can use a dummy key if skipHistory is true.
-  const historyKey = skipHistory ? "3d_calc_history_dummy" : "3d_calc_history_v3";
-  const [history, setHistory] = useLocalStorage(historyKey, []);
+  const [history, setHistory] = useState([]);
+  const [loadingHistory, setLoadingHistory] = useState(true);
+
+  // Escuchar historial desde Firestore
+  useEffect(() => {
+    if (!user || skipHistory) {
+      setLoadingHistory(false);
+      return;
+    }
+    
+    const docRef = doc(db, "users", user.uid, "config", "history");
+    const unsubscribe = onSnapshot(docRef, (docSnap) => {
+      if (docSnap.exists()) {
+        setHistory(docSnap.data().quotes || []);
+      }
+      setLoadingHistory(false);
+    }, (error) => {
+      console.error("Error al escuchar historial:", error);
+      setLoadingHistory(false);
+    });
+
+    return () => unsubscribe();
+  }, [user, skipHistory]);
+
+  // Helper para guardar en Firestore
+  const saveHistoryToFirestore = (newHistory) => {
+    setHistory(newHistory);
+    if (user && !skipHistory) {
+      const docRef = doc(db, "users", user.uid, "config", "history");
+      setDoc(docRef, { quotes: newHistory }, { merge: true }).catch(err => 
+        console.error("Error saving history to Firestore:", err)
+      );
+    }
+  };
 
   // Update top-level project fields (projectName, profitMultiplier, etc.)
   const updateProjectField = (key, value) => {
@@ -187,28 +218,29 @@ export default function useCalculator(
       details: { ...project },
       results: { ...results }
     };
-    setHistory((prev) => [newRecord, ...prev]);
+    const newHistory = [newRecord, ...history];
+    saveHistoryToFirestore(newHistory);
   };
 
   // Delete a saved calculation from history
   const deleteFromHistory = (id) => {
-    setHistory((prev) => prev.filter((item) => item.id !== id));
+    const newHistory = history.filter((item) => item.id !== id);
+    saveHistoryToFirestore(newHistory);
   };
 
   // Update a specific history item
   const updateHistoryItem = (id, updatedProjectDetails, updatedResults) => {
     if (skipHistory) return;
-    setHistory((prev) =>
-      prev.map((item) =>
-        item.id === id
-          ? {
-              ...item,
-              details: { ...updatedProjectDetails },
-              results: { ...updatedResults },
-            }
-          : item
-      )
+    const newHistory = history.map((item) =>
+      item.id === id
+        ? {
+            ...item,
+            details: { ...updatedProjectDetails },
+            results: { ...updatedResults },
+          }
+        : item
     );
+    saveHistoryToFirestore(newHistory);
   };
 
   // Load a saved calculation back into active edit mode
@@ -222,6 +254,7 @@ export default function useCalculator(
     project,
     results,
     history,
+    loadingHistory,
     updateProjectField,
     addPlate,
     removePlate,

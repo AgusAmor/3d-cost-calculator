@@ -26,7 +26,10 @@ This document defines the methodology, coding standards, and best practices that
 
 ## ⚙️ Project Architecture & Data Models
 
-When implementing features, keep the state modular and centralized. Save configuration values (filament prices, electricity cost, margins) in `localStorage` so they persist between sessions. The project state follows a multi-plate model, meaning a single project can have an array of `plates`, each with its own filament selection, weight, and print time.
+When implementing features, keep the state modular and centralized. The application uses **Firebase Auth** (Google Provider) for user authentication and **Cloud Firestore** for data persistence. 
+- Configuration values (filament prices, electricity cost) are saved per user in `users/{uid}/config/settings`.
+- Historical quotes are saved per user in `users/{uid}/config/history`.
+The project state follows a multi-plate model, meaning a single project can have an array of `plates`, each with its own filament selection, weight, and print time.
 
 ### Component Structure
 

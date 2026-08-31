@@ -8,6 +8,8 @@ import PlateCard from "./components/plates/PlateCard";
 import ProfitSection from "./components/layout/ProfitSection";
 import SummarySection from "./components/layout/SummarySection";
 import PrintableBudget from "./components/layout/PrintableBudget";
+import Login from "./components/auth/Login";
+import { useAuth } from "./context/AuthContext";
 
 /**
  * Main Calculator Page component.
@@ -15,18 +17,20 @@ import PrintableBudget from "./components/layout/PrintableBudget";
  * modular input/display panels, and printable PDF layouts.
  */
 export default function App() {
+  const { user, logout } = useAuth();
   const [isEditingProjectName, setIsEditingProjectName] = useState(false);
   const [tempProjectName, setTempProjectName] = useState("");
   const [printData, setPrintData] = useState(null);
   const [platesRef] = useAutoAnimate();
 
-  const { settings, updateSetting, addFilament, updateFilament, deleteFilament } =
+  const { settings, loadingSettings, updateSetting, addFilament, updateFilament, deleteFilament } =
     useSettings();
 
   const {
     project,
     results,
     history,
+    loadingHistory,
     updateProjectField,
     addPlate,
     removePlate,
@@ -67,6 +71,21 @@ export default function App() {
     setIsEditingProjectName(false);
   };
 
+  if (!user) {
+    return <Login />;
+  }
+
+  if (loadingSettings || loadingHistory) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100">
+        <div className="flex flex-col items-center gap-4">
+          <div className="animate-spin rounded-full h-12 w-12 border-4 border-violet-200 dark:border-violet-900 border-t-violet-600 dark:border-t-violet-500"></div>
+          <p className="text-sm font-medium text-slate-500">Cargando datos en la nube...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen print:min-h-0 bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 selection:bg-violet-600 selection:text-white pb-12 print:pb-0">
       {/* Interactive Main Dashboard View (Hidden during printing) */}
@@ -86,8 +105,17 @@ export default function App() {
               </p>
             </div>
           </div>
-          <div className="text-xs text-slate-500 dark:text-slate-400 text-right">
-            <span>Versión 1.0.0 (MVP)</span>
+
+          <div className="flex items-center gap-4">
+            <div className="text-sm text-slate-500 font-medium">
+              Hola, {user.displayName || "Usuario"}
+            </div>
+            <button
+              onClick={logout}
+              className="text-sm px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            >
+              Cerrar sesión
+            </button>
           </div>
         </header>
 

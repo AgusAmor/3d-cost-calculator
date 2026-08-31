@@ -8,6 +8,7 @@
   <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite" />
   <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React" />
   <img src="https://img.shields.io/badge/Tailwind_CSS_v4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="TailwindCSS" />
+  <img src="https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black" alt="Firebase" />
   <img src="https://img.shields.io/badge/Status-Activo-brightgreen?style=for-the-badge" alt="Status" />
 </p>
 
@@ -35,17 +36,18 @@
 
 - **Formato Tabla:** Vista resumida y clara de todos los costos desglosados.
 - **Formato PDF:** Descarga de presupuestos profesionales listos para enviar al cliente.
-- **Historial:** Guardado local de cotizaciones con posibilidad de edición, visualización y exportación directa a PDF.
+- **Historial en la Nube:** Guardado de cotizaciones vinculadas a tu cuenta con posibilidad de edición, visualización y exportación directa a PDF desde cualquier dispositivo.
 
 ### ⚙️ 4. Panel de Configuración
 
 - **Tarifa eléctrica:** Costo por kilovatio hora (kWh).
-- **Base de datos local:** Listado de filamentos con precio y peso del carrete.
+- **Catálogo Sincronizado:** Listado de filamentos con precio y peso del carrete guardado en Firestore.
 - **Consumibles y extras:** Costo de boquillas, laca de adherencia y amortización del equipo.
 
 ### 🖥️ 5. Interfaz Optimizada
 
-- **Soporte PWA:** Instalable como aplicación nativa (iOS/Android) con íconos, atajos y funcionamiento offline vía Service Worker.
+- **Soporte PWA:** Instalable como aplicación nativa (iOS/Android) con íconos, atajos y funcionamiento offline.
+- **Sincronización en Tiempo Real:** Inicio de sesión con Google Auth y bases de datos Firestore con soporte sin conexión, permitiendo utilizar la app y sincronizar los datos automáticamente.
 - **Soporte Internacional:** Soporte total para el uso de comas (`,`) como separador decimal en todos los campos numéricos.
 - **Diseño Responsivo y Temas Dinámicos:** Disposición visual adaptativa y soporte automático para *Modo Claro* y *Modo Oscuro* en función de las preferencias del sistema del usuario.
 
@@ -57,7 +59,7 @@
 | :---------------- | :-------------------------------------------------------- | :------------------------------------------------------ |
 | **Framework**     | [React](https://reactjs.org/) + [Vite](https://vite.dev/) | Renderizado reactivo y carga ultra rápida               |
 | **Estilos**       | [Tailwind CSS v4](https://tailwindcss.com/)               | Diseño moderno con soporte nativo dual para Modo Claro/Oscuro |
-| **Base de datos** | LocalStorage                                              | Persistencia de datos locales sin necesidad de servidor |
+| **Backend & BD**  | [Firebase](https://firebase.google.com/)                  | Autenticación con Google y Firestore (sincronización y persistencia en la nube con caché offline) |
 
 ---
 

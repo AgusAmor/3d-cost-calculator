@@ -68,7 +68,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 selection:bg-violet-600 selection:text-white pb-12">
+    <div className="min-h-screen print:min-h-0 bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 selection:bg-violet-600 selection:text-white pb-12 print:pb-0">
       {/* Interactive Main Dashboard View (Hidden during printing) */}
       <div className="print:hidden max-w-350 mx-auto px-4 sm:px-6 lg:px-8 pt-8 space-y-8">
         {/* Header */}

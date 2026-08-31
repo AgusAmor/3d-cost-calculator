@@ -31,10 +31,11 @@
 
 - Define un multiplicador de ganancia directo (por ejemplo, x6) sobre el costo total de producción de todas las bandejas.
 
-### 📋 3. Exportación de Presupuestos
+### 📋 3. Exportación y Gestión de Presupuestos
 
 - **Formato Tabla:** Vista resumida y clara de todos los costos desglosados.
 - **Formato PDF:** Descarga de presupuestos profesionales listos para enviar al cliente.
+- **Historial:** Guardado local de cotizaciones con posibilidad de edición, visualización y exportación directa a PDF.
 
 ### ⚙️ 4. Panel de Configuración
 

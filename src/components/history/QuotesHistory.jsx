@@ -1,4 +1,4 @@
-import { FiClock, FiEye, FiEdit2, FiTrash2 } from "react-icons/fi";
+import { FiClock, FiEye, FiTrash2, FiPrinter } from "react-icons/fi";
 import { formatCurrency, formatDuration } from "../../utils/formatters";
 import { useConfirm } from "../../context/ConfirmContext";
 import QuoteModal from "./QuoteModal";
@@ -9,6 +9,7 @@ export default function QuotesHistory({
   settings,
   updateHistoryItem,
   deleteFromHistory,
+  handleExport,
 }) {
   const [selectedQuote, setSelectedQuote] = useState(null);
   const [activeQuote, setActiveQuote] = useState(null);
@@ -70,11 +71,11 @@ export default function QuotesHistory({
                     <FiEye className="text-lg" />
                   </button>
                   <button
-                    onClick={() => openQuoteModal(item, "edit")}
-                    className="p-2 text-sky-400 hover:bg-sky-400/10 rounded-lg transition-colors cursor-pointer"
-                    title="Editar cotización"
+                    onClick={() => handleExport(item)}
+                    className="p-2 text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800 rounded-lg transition-colors cursor-pointer"
+                    title="Exportar PDF"
                   >
-                    <FiEdit2 className="text-lg" />
+                    <FiPrinter className="text-lg" />
                   </button>
                   <button
                     onClick={async () => {

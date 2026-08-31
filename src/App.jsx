@@ -17,6 +17,7 @@ import PrintableBudget from "./components/layout/PrintableBudget";
 export default function App() {
   const [isEditingProjectName, setIsEditingProjectName] = useState(false);
   const [tempProjectName, setTempProjectName] = useState("");
+  const [printData, setPrintData] = useState(null);
   const [platesRef] = useAutoAnimate();
 
   const { settings, updateSetting, addFilament, updateFilament, deleteFilament } =
@@ -37,8 +38,21 @@ export default function App() {
   } = useCalculator(settings);
 
   // Handle launching browser PDF export / print mode
-  const handleExport = () => {
-    window.print();
+  const handleExport = (historicalItem = null) => {
+    if (historicalItem) {
+      setPrintData({
+        project: historicalItem.details,
+        results: historicalItem.results,
+      });
+      // Wait for React to render before triggering print
+      setTimeout(() => {
+        window.print();
+        // Clear after opening print dialog
+        setTimeout(() => setPrintData(null), 500);
+      }, 150);
+    } else {
+      window.print();
+    }
   };
 
   const startEditingProject = () => {
@@ -189,8 +203,8 @@ export default function App() {
 
       {/* A4 Printable Quotation Sheet (Visible ONLY during print layout) */}
       <PrintableBudget
-        project={project}
-        results={results}
+        project={printData ? printData.project : project}
+        results={printData ? printData.results : results}
         settings={settings}
       />
     </div>

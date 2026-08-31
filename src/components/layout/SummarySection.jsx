@@ -40,6 +40,7 @@ export default function SummarySection({
         settings={settings}
         updateHistoryItem={updateHistoryItem}
         deleteFromHistory={deleteFromHistory}
+        handleExport={handleExport}
       />
     </div>
   );
